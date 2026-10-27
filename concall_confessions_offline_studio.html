@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CONCALL CONFESSIONS // 100% Offline Multi-PDF Concall Forensic Analyzer</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --heading: #f0f6fc;
+      --accent: #58a6ff;
+      --danger: #f85149;
+      --warning: #d29922;
+      --success: #3fb950;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-severe { background: rgba(248, 81, 73, 0.18); color: #f85149; border: 1px solid rgba(248, 81, 73, 0.5); }
+    .badge-mod { background: rgba(210, 153, 34, 0.18); color: #d29922; border: 1px solid rgba(210, 153, 34, 0.5); }
+    .badge-firm { background: rgba(63, 185, 80, 0.18); color: #3fb950; border: 1px solid rgba(63, 185, 80, 0.5); }
+    .badge-neutral { background: rgba(88, 166, 255, 0.15); color: #58a6ff; border: 1px solid rgba(88, 166, 255, 0.4); }
+    .drop-active { border-color: #58a6ff !important; background-color: rgba(88, 166, 255, 0.08) !important; }
+  </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+  <div class="max-w-7xl mx-auto space-y-6">
+
+    <!-- Top Header -->
+    <header class="border-b border-[#30363d] pb-5 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2.5">
+          <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-[#21262d] text-[#58a6ff] border border-[#30363d] mono">ZERO-API • 100% OFFLINE ENGINE</span>
+          <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-[#21262d] text-[#3fb950] border border-[#30363d] mono">MULTI-PDF READY</span>
+        </div>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-[#f0f6fc] mt-2 tracking-tight">CONCALL CONFESSIONS // Institutional Autopsy</h1>
+        <p class="text-sm text-[#8b949e] mt-1">Drop 1 to 4+ real company concall PDFs (or `.txt` files) to run live deterministic forensic interrogation with zero pre-filled data.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="btnPasteModal" type="button" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-[#21262d] hover:bg-[#30363d] text-[#f0f6fc] border border-[#30363d] transition">
+          + Paste Raw Transcript Text
+        </button>
+        <button id="btnExportHtml" type="button" class="hidden px-3.5 py-2 rounded-lg text-xs font-semibold bg-[#238636] hover:bg-[#2ea043] text-white transition">
+          Export Standalone HTML Report
+        </button>
+        <button id="btnClearAll" type="button" class="hidden px-3.5 py-2 rounded-lg text-xs font-semibold bg-[#21262d] hover:bg-[#f85149]/20 hover:text-[#f85149] text-[#8b949e] border border-[#30363d] transition">
+          Clear All Calls
+        </button>
+      </div>
+    </header>
+
+    <!-- Upload / Drag & Drop Zone -->
+    <section id="dropZone" class="bg-[#161b22] border-2 border-dashed border-[#30363d] rounded-xl p-6 md:p-8 text-center transition cursor-pointer hover:border-[#58a6ff]">
+      <input id="fileInput" type="file" accept=".pdf,.txt" multiple class="hidden">
+      <div class="max-w-xl mx-auto space-y-3">
+        <div class="w-12 h-12 rounded-full bg-[#21262d] border border-[#30363d] flex items-center justify-center mx-auto text-[#58a6ff] font-bold text-lg mono">
+          PDF
+        </div>
+        <h2 class="text-base md:text-lg font-bold text-[#f0f6fc]">Select or Drag & Drop 1 to 4+ Concall Transcripts (`.pdf` or `.txt`)</h2>
+        <p class="text-xs md:text-sm text-[#8b949e]">
+          Upload a single concall PDF for a deep forensic autopsy, or select 3–4 consecutive quarterly concalls (`Q1.pdf`, `Q2.pdf`, `Q3.pdf`, `Q4.pdf`) to compare management candor, hedge escalation, and guidance shifts side-by-side.
+        </p>
+        <div class="pt-2 flex flex-wrap justify-center gap-3">
+          <button id="btnSelectFiles" type="button" class="px-5 py-2.5 rounded-lg text-sm font-semibold bg-[#58a6ff] hover:bg-[#4090e8] text-[#0d1117] transition">
+            Browse Concall PDF / TXT Files
+          </button>
+        </div>
+        <div id="parseStatus" class="text-xs text-[#58a6ff] mono hidden pt-2"></div>
+      </div>
+    </section>
+
+    <!-- Paste Raw Text Modal (Hidden by default) -->
+    <section id="pastePanel" class="hidden bg-[#161b22] border border-[#30363d] rounded-xl p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-bold text-[#f0f6fc]">Add Transcript via Direct Text Paste</h3>
+        <button id="btnClosePaste" type="button" class="text-xs text-[#8b949e] hover:text-white">Close ✕</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <input id="pasteTitleInput" type="text" placeholder="Company & Period Label (e.g., Tata Motors Q3 FY26)" class="bg-[#0d1117] border border-[#30363d] rounded-lg px-3 py-2 text-sm text-[#f0f6fc] focus:outline-none focus:border-[#58a6ff]">
+        <div class="text-xs text-[#8b949e] flex items-center">Paste full earnings call text below (Opening Remarks + Q&A).</div>
+      </div>
+      <textarea id="pasteTextArea" rows="6" placeholder="Paste full earnings call transcript here..." class="w-full bg-[#0d1117] border border-[#30363d] rounded-lg p-3 text-xs mono text-[#c9d1d9] focus:outline-none focus:border-[#58a6ff]"></textarea>
+      <div class="flex justify-end gap-2">
+        <button id="btnRunPasted" type="button" class="px-4 py-2 rounded-lg text-xs font-semibold bg-[#58a6ff] text-[#0d1117] hover:bg-[#4090e8] transition">
+          Analyze & Add to Session
+        </button>
+      </div>
+    </section>
+
+    <!-- Empty State Banner (Before user uploads any file) -->
+    <section id="emptyStateBox" class="bg-[#161b22]/60 border border-[#30363d] rounded-xl p-6 text-center space-y-2">
+      <p class="text-sm font-semibold text-[#f0f6fc]">No Pre-Filled Data Loaded — Waiting for Your Concall PDF(s)</p>
+      <p class="text-xs text-[#8b949e] max-w-2xl mx-auto">
+        Every metric, red flag, guidance table, and Q&A deflection below will be computed live from the PDF or TXT files you drop above. Nothing leaves your machine.
+      </p>
+    </section>
+
+    <!-- Main Analysis Workspace (Revealed dynamically once 1+ files are uploaded) -->
+    <div id="analysisWorkspace" class="hidden space-y-6">
+
+      <!-- Multi-Concall Comparison Matrix (Shown when 2+ calls are loaded) -->
+      <section id="multiCallSection" class="hidden bg-[#161b22] border border-[#30363d] rounded-xl p-5 space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+          <div>
+            <h2 class="text-lg font-bold text-[#f0f6fc]">Multi-Concall Trajectory & Cross-Call Comparison</h2>
+            <p id="trajectorySummary" class="text-xs text-[#8b949e] mt-0.5"></p>
+          </div>
+          <span id="trajectoryBadge" class="badge badge-neutral"></span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse text-left text-xs md:text-sm">
+            <thead>
+              <tr class="bg-[#21262d] text-[#f0f6fc] border-b border-[#30363d]">
+                <th class="p-3">Call / Transcript</th>
+                <th class="p-3">Candor Score</th>
+                <th class="p-3">Credibility Read</th>
+                <th class="p-3">Q&A Deflection Rate</th>
+                <th class="p-3">Q&A Hedge Density</th>
+                <th class="p-3">Guidance Targets</th>
+                <th class="p-3">Red Flags</th>
+                <th class="p-3">Action</th>
+              </tr>
+            </thead>
+            <tbody id="multiCallTableBody" class="divide-y divide-[#30363d]"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Call Selector Tabs -->
+      <div class="flex items-center justify-between flex-wrap gap-3 border-b border-[#30363d] pb-3">
+        <div id="callTabsContainer" class="flex flex-wrap gap-2"></div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-[#8b949e]">Execution Credibility Read:</span>
+          <span id="activeCredibilityBadge" class="badge badge-firm text-sm">-</span>
+        </div>
+      </div>
+
+      <!-- Executive Scorecard Metrics -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4">
+          <div class="text-xs text-[#8b949e]">Management Candor Score</div>
+          <div id="statCandor" class="text-2xl font-extrabold text-[#f0f6fc] mt-1">-</div>
+          <div id="statTurnsSub" class="text-[11px] text-[#8b949e] mt-1 mono">-</div>
+        </div>
+        <div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4">
+          <div class="text-xs text-[#8b949e]">Question Deflection Rate</div>
+          <div id="statDeflectionRate" class="text-2xl font-extrabold text-[#f0f6fc] mt-1">-</div>
+          <div id="statDeflectionSub" class="text-[11px] text-[#8b949e] mt-1 mono">-</div>
+        </div>
+        <div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4">
+          <div class="text-xs text-[#8b949e]">Q&A Hedge Density</div>
+          <div id="statHedgeDensity" class="text-2xl font-extrabold text-[#f0f6fc] mt-1">-</div>
+          <div id="statHedgeSub" class="text-[11px] text-[#8b949e] mt-1 mono">-</div>
+        </div>
+        <div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4">
+          <div class="text-xs text-[#8b949e]">Explicit Targets Extracted</div>
+          <div id="statTargetsCount" class="text-2xl font-extrabold text-[#f0f6fc] mt-1">-</div>
+          <div id="statTargetsSub" class="text-[11px] text-[#8b949e] mt-1 mono">-</div>
+        </div>
+      </section>
+
+      <!-- Section 1: Forensic Red Flags -->
+      <section class="bg-[#161b22] border border-[#30363d] rounded-xl p-5 space-y-3">
+        <h2 class="text-base md:text-lg font-bold text-[#f0f6fc]">Forensic Red Flags & Evidentiary Checks</h2>
+        <div id="redFlagsContainer" class="overflow-x-auto"></div>
+      </section>
+
+      <!-- Section 2: Forward Guidance & Numerical Commitments -->
+      <section class="bg-[#161b22] border border-[#30363d] rounded-xl p-5 space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <h2 class="text-base md:text-lg font-bold text-[#f0f6fc]">Forward Guidance & Numerical Commitments</h2>
+          <div class="flex items-center gap-2">
+            <select id="guidanceFilter" class="bg-[#0d1117] border border-[#30363d] rounded-lg px-2.5 py-1.5 text-xs text-[#c9d1d9]">
+              <option value="ALL">All Firmness Tiers</option>
+              <option value="Firm Commitment">Firm Commitments Only</option>
+              <option value="Standard Guidance">Standard Guidance Only</option>
+              <option value="Hedged / Soft">Hedged / Soft Targets Only</option>
+            </select>
+          </div>
+        </div>
+        <div id="guidanceContainer" class="overflow-x-auto"></div>
+      </section>
+
+      <!-- Section 3: Audited Q&A Deflections & Quantitative Evasions -->
+      <section class="bg-[#161b22] border border-[#30363d] rounded-xl p-5 space-y-3">
+        <h2 class="text-base md:text-lg font-bold text-[#f0f6fc]">Audited Q&A Deflections ("Taken Offline" & Quantitative Non-Answers)</h2>
+        <div id="deflectionsContainer" class="space-y-3"></div>
+      </section>
+
+      <!-- Section 4: Capex, Debt & Margin Drivers -->
+      <section class="bg-[#161b22] border border-[#30363d] rounded-xl p-5 space-y-4">
+        <h2 class="text-base md:text-lg font-bold text-[#f0f6fc]">Capex, Debt & Margin Driver Disclosures</h2>
+        <div id="driversContainer" class="grid grid-cols-1 lg:grid-cols-3 gap-4"></div>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    // Configure PDF.js worker if available
+    if (window.pdfjsLib) {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+
+    // Embedded Lexicons (Exact match with upgraded Python repo)
+    const LEXICONS = {
+      deflections: [
+        "take this offline", "take that offline", "discuss offline", "connect offline",
+        "take it offline", "offline discussion", "touch base offline", "speak offline",
+        "don't have the exact figure", "do not have the exact number", "don't have the exact number",
+        "do not have that handy", "don't have that handy", "don't have the exact",
+        "team will share the details", "investor relations will get back", "will revert back",
+        "will get back to you", "cannot share at this stage", "not in a position to disclose",
+        "we do not provide guidance on", "we don't give breakup", "do not give segment breakup",
+        "too early to give guidance", "premature to comment", "difficult to quantify",
+        "hard to put a number", "as i mentioned earlier", "as already explained",
+        "as stated previously", "like we said in the opening remarks", "already answered that"
+      ],
+      hedges: [
+        "subject to", "contingent upon", "depends on", "depending on orders",
+        "based on market conditions", "order inflows permitting", "if all goes well",
+        "assuming no further", "provided that", "barring unforeseen", "roughly",
+        "approximate", "around", "give or take", "ballpark", "more or less",
+        "tentative", "tentatively", "in the vicinity of", "broadly in line",
+        "some bit of", "hopefully", "we believe", "we assume", "we expect maybe",
+        "likely", "probably", "striving for", "aspirational", "not set in stone",
+        "yet to finalize", "endeavor to", "wait and watch", "fingers crossed"
+      ],
+      marginDrivers: [
+        "operating leverage", "raw material", "input cost", "freight cost", "product mix",
+        "utilization", "pricing power", "price hike", "inventory lag", "power and fuel",
+        "realization", "backward integration", "cost optimization", "value added products"
+      ],
+      redFlags: [
+        "delay", "postponed", "headwind", "cancellation", "underutilized", "write-off",
+        "impairment", "restructuring", "inventory buildup", "margin dilution",
+        "working capital stretch", "slowdown", "destocking", "price erosion",
+        "liquidated damages", "resignation", "penalty", "show cause"
+      ],
+      balanceSheetStress: [
+        "debt", "borrowings", "leverage", "refinancing", "pledged", "receivable days",
+        "working capital cycle", "capex deferral", "liquidity", "interest cost",
+        "debtor days", "overdue", "covenant"
+      ]
+    };
+
+    // State
+    let analyzedCalls = [];
+    let activeCallIndex = 0;
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escapeRegex(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    // 1. Extract text from uploaded PDF or TXT
+    async function extractTextFromFile(file) {
+      if (file.name.toLowerCase().endsWith('.pdf')) {
+        if (!window.pdfjsLib) {
+          throw new Error('PDF.js library not loaded. Please check internet connection or upload a .txt transcript.');
+        }
+        const arrayBuffer = await file.arrayBuffer();
+        const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        let pagesText = [];
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          let lastY = null;
+          let pageStr = '';
+          for (const item of content.items) {
+            if (lastY !== null && Math.abs(item.transform[5] - lastY) > 4) {
+              pageStr += '\n';
+            } else if (pageStr.length > 0 && !pageStr.endsWith(' ') && !pageStr.endsWith('\n')) {
+              pageStr += ' ';
+            }
+            pageStr += item.str;
+            lastY = item.transform[5];
+          }
+          pagesText.push(pageStr);
+        }
+        return pagesText.join('\n\n');
+      } else {
+        return await file.text();
+      }
+    }
+
+    // 2. Deterministic Parser + Extractor + Forensic Engine (Ported 1:1 from Python Repo)
+    function analyzeTranscript(rawText, filename, customLabel) {
+      let cleanText = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+      cleanText = cleanText.replace(/Page\s+\d+\s+of\s+\d+/gi, '');
+      cleanText = cleanText.replace(/\n{3,}/g, '\n\n').trim();
+
+      // Metadata detection
+      const headerChunk = cleanText.slice(0, 2500);
+      const baseName = filename.replace(/\.[^/.]+$/, '');
+      const periodRegex = /\b(Q[1-4]\s*FY\s*'?\d{2,4}|H[1-2]\s*FY\s*'?\d{2,4}|FY\s*'?\d{2,4}|Q[1-4]\s+20\d{2})\b/i;
+      const periodMatch = headerChunk.match(periodRegex) || baseName.match(periodRegex);
+      const period = periodMatch ? periodMatch[1].replace(/\s+/g, ' ').toUpperCase() : 'Concall Audit';
+
+      let company = customLabel || null;
+      if (!company) {
+        const compRegex = /([A-Z][A-Za-z0-9&\s.\-]{2,42}?\s+(?:Limited|Ltd\.?|Corporation|Corp\.?|Inc\.?|PLC|Enterprises|Industries))/g;
+        let m;
+        while ((m = compRegex.exec(headerChunk)) !== null) {
+          const candidate = m[1].trim();
+          const low = candidate.toLowerCase();
+          if (!low.includes('chorus call') && !low.includes('link intime') && !low.includes('stock exchange') && !low.includes('national stock')) {
+            company = candidate;
+            break;
+          }
+        }
+      }
+      if (!company) {
+        company = baseName.replace(/[_\-]+/g, ' ').trim();
+      }
+
+      const wordCount = (cleanText.match(/\b\w+\b/g) || []).length;
+
+      // Split Opening Remarks vs Q&A Session
+      const qaSplitPatterns = [
+        /question[ -]and[ -]answer(?:s)?\s+session/i,
+        /q\s*&\s*a\s+session/i,
+        /floor\s+is\s+open\s+for\s+questions/i,
+        /open\s+the\s+floor\s+for\s+q&a/i,
+        /we\s+will\s+now\s+begin\s+the\s+question/i,
+        /ladies\s+and\s+gentlemen,\s+we\s+will\s+now\s+begin/i,
+        /first\s+question\s+is\s+from\s+the\s+line\s+of/i,
+        /anyone\s+who\s+wishes\s+to\s+ask\s+a\s+question/i
+      ];
+
+      let splitPos = -1;
+      for (const pat of qaSplitPatterns) {
+        const match = pat.exec(cleanText);
+        if (match) {
+          splitPos = match.index;
+          break;
+        }
+      }
+
+      let qaSession = '';
+      if (splitPos !== -1) {
+        qaSession = cleanText.slice(splitPos).trim();
+      } else {
+        const twentyPct = Math.floor(cleanText.length * 0.25);
+        const qIdx = cleanText.slice(twentyPct).indexOf('?');
+        if (qIdx !== -1) {
+          qaSession = cleanText.slice(twentyPct + Math.max(0, qIdx - 300)).trim();
+        } else {
+          qaSession = cleanText.slice(Math.floor(cleanText.length * 0.45)).trim();
+        }
+      }
+
+      // Parse Q&A Speaker Turns
+      const speakerRegex = /^(?:(?:Mr\.|Ms\.|Mrs\.|Dr\.|Shri)\s+)?[A-Z][A-Za-z.\s\-']{1,45}(?:\s*\([^\n)]{1,50}\))?\s*(?::|\s+[–—-]\s+)\s*/gm;
+      const matches = [...qaSession.matchAll(speakerRegex)];
+      let qaTurns = [];
+
+      if (matches.length === 0 && qaSession.length > 0) {
+        qaTurns.push({ speaker: 'Management', role: 'management', text: qaSession });
+      } else {
+        for (let i = 0; i < matches.length; i++) {
+          const rawHeader = matches[i][0].replace(/(?::|\s+[–—-]\s+)\s*$/, '').trim();
+          const startIdx = matches[i].index + matches[i][0].length;
+          const endIdx = (i + 1 < matches.length) ? matches[i + 1].index : qaSession.length;
+          const speech = qaSession.slice(startIdx, endIdx).trim();
+          if (!speech) continue;
+
+          const hLow = rawHeader.toLowerCase();
+          let role = 'management';
+          if (['moderator', 'operator', 'host', 'coordinator'].some(t => hLow.includes(t))) {
+            role = 'moderator';
+          } else if (['analyst', 'capital', 'securities', 'partners', 'mutual fund', 'asset', 'equities', 'broking', 'wealth', 'investments', 'institutional'].some(t => hLow.includes(t))) {
+            role = 'analyst';
+          } else if (['management', 'md', 'ceo', 'cfo', 'coo', 'director', 'chairman', 'president', 'vp', 'head', 'chief', 'founder', 'promoter'].some(t => hLow.includes(t))) {
+            role = 'management';
+          } else if (speech.includes('?') && speech.length < 950) {
+            role = 'analyst';
+          } else {
+            const prevRole = qaTurns.length > 0 ? qaTurns[qaTurns.length - 1].role : 'moderator';
+            role = (prevRole === 'analyst') ? 'management' : 'analyst';
+          }
+          qaTurns.push({ speaker: rawHeader, role, text: speech });
+        }
+      }
+
+      // Sentence splitting (protecting Rs., Mr., Ltd., etc.)
+      const flatText = cleanText.replace(/\s+/g, ' ');
+      const protectedText = flatText.replace(/\b(Rs|Mr|Ms|Mrs|Dr|Prof|Sr|Jr|St|Ltd|Inc|Corp|Co|vs|etc|approx|fy|qtr)\./gi, '$1<PRD>');
+      const sentences = protectedText
+        .split(/(?<=[.?!])\s+(?=[A-Z0-9"'])/)
+        .map(s => s.replace(/<PRD>/g, '.').trim())
+        .filter(s => s.length > 18);
+
+      const timelineRegex = /\b(?:Q[1-4]\s*(?:FY)?\s*'?\d{2,4}|FY\s*'?\d{2,4}|H[1-2]\s*(?:FY)?\s*'?\d{2,4}|(?:by|in|for)\s+20\d{2}(?:-\d{2})?|next\s+(?:quarter|year|two\s+quarters|fiscal|12\s+months)|second\s+half|first\s+half)\b/gi;
+      const quantumRegex = /(?:(?:Rs\.?|INR|₹|\$|€|USD)\s*[\d,]+(?:\.\d+)?\s*(?:Cr(?:ore(?:s)?)?|Lakh(?:s)?|Mn|Bn|Billion|Million|k)?|[\d,]+(?:\.\d+)?\s*(?:-\s*[\d,]+(?:\.\d+)?\s*)?(?:Cr(?:ore(?:s)?)?|Lakh(?:s)?|Mn|Bn|Billion|Million|bps|basis\s+points|%|percent|x\b|times\b))/gi;
+      const intentRegex = /\b(?:guidance|guiding|guide|target|targeting|expect|expecting|aim|aiming|project|projecting|estimate|estimating|aspirational|run-rate|run\s+rate|outlook|visibility|deliver|achieve|grow\s+by|growth\s+of|revenue\s+of|margin\s+of|ebitda\s+of|pat\s+of|cagr)\b/i;
+
+      function classifyCategory(s) {
+        const low = s.toLowerCase();
+        if (['revenue', 'top line', 'topline', 'sales', 'turnover', 'order book', 'inflow', 'volume', 'cagr'].some(k => low.includes(k))) return 'Revenue / Top-line';
+        if (['margin', 'ebitda', 'pat', 'gross', 'operating', 'profitability', 'bps', 'basis points', 'roce', 'roe'].some(k => low.includes(k))) return 'Margins / Profitability';
+        if (['capex', 'capital expenditure', 'capacity', 'commissioning', 'expansion', 'plant', 'utilization'].some(k => low.includes(k))) return 'Capex / Capacity';
+        if (['debt', 'borrowing', 'leverage', 'working capital', 'receivable', 'inventory', 'repayment'].some(k => low.includes(k))) return 'Debt / Working Capital';
+        return 'General Operational';
+      }
+
+      function assessFirmness(s) {
+        const low = s.toLowerCase();
+        if (['maybe', 'subject to', 'tentative', 'depends', 'hope', 'hopefully', 'aspirational', 'roughly', 'ballpark', 'around', 'broadly', 'endeavor', 'if all goes well', 'likely', 'probably', 'contingent'].some(h => low.includes(h))) {
+          return 'Hedged / Soft';
+        }
+        if (['confident', 'firmly', 'committed', 'on track', 'locked in', 'definitely', 'certainly', 'assured', 'visibly', 'at least', 'minimum'].some(f => low.includes(f))) {
+          return 'Firm Commitment';
+        }
+        return 'Standard Guidance';
+      }
+
+      const guidanceRecords = [];
+      const capexList = [];
+      const debtList = [];
+      const marginDrivers = [];
+
+      const marginKeywordRegex = /\b(margin|margins|ebitda|gross margin|operating margin|profitability|spreads)\b/i;
+      const driverKeywordRegex = new RegExp('\\b(' + LEXICONS.marginDrivers.map(escapeRegex).join('|') + ')\\b', 'gi');
+
+      for (const sentence of sentences) {
+        const quantums = [...new Set((sentence.match(quantumRegex) || []).map(q => q.trim()))];
+        const timelines = [...new Set((sentence.match(timelineRegex) || []).map(t => t.trim()))];
+        const sLow = sentence.toLowerCase();
+
+        if (intentRegex.test(sentence) && quantums.length > 0) {
+          guidanceRecords.push({
+            metric_category: classifyCategory(sentence),
+            sentence,
+            quantums,
+            timelines: timelines.length > 0 ? timelines : ['Ongoing / Full Year'],
+            firmness: assessFirmness(sentence)
+          });
+        }
+
+        if (['capex', 'capital expenditure', 'brownfield', 'greenfield', 'commissioning', 'capacity addition'].some(c => sLow.includes(c)) && quantums.length > 0) {
+          capexList.push({ sentence, figures: quantums });
+        }
+
+        if (['debt', 'borrowing', 'deleverage', 'repayment', 'working capital', 'receivable days', 'interest cost'].some(d => sLow.includes(d)) && quantums.length > 0) {
+          debtList.push({ sentence, figures: quantums });
+        }
+
+        if (marginKeywordRegex.test(sentence)) {
+          const dMatches = sentence.match(driverKeywordRegex);
+          if (dMatches && dMatches.length > 0) {
+            const uniqueDrivers = [...new Set(dMatches.map(d => d.toLowerCase()))];
+            marginDrivers.push({
+              drivers: uniqueDrivers,
+              quantums,
+              statement: sentence
+            });
+          }
+        }
+      }
+
+      // Audit Q&A Turns
+      const deflectionEvents = [];
+      const numericEvasions = [];
+      const hedgedResponses = [];
+      let totalMgmtTurns = 0;
+      let totalAnalystQuestions = 0;
+
+      const numericQuestionRegex = /\b(how\s+much|what\s+is\s+the|what\s+was\s+the|quantify|breakup|break-up|split|percentage|margin|capex|guidance|target|number|figure|run\s+rate|utilization)\b/i;
+      const numberInAnswerRegex = /(?:\b\d+(?:\.\d+)?\s*(?:%|percent|bps|cr|crore|lakh|mn|million|bn|billion|x|times)\b|(?:rs\.?|inr|₹|\$)\s*\d+)/i;
+
+      for (let i = 0; i < qaTurns.length; i++) {
+        const turn = qaTurns[i];
+        if (turn.role === 'analyst') {
+          totalAnalystQuestions++;
+        } else if (turn.role === 'management') {
+          totalMgmtTurns++;
+          const speech = turn.text;
+          const words = speech.match(/\b\w+\b/g) || [];
+
+          let priorQuestion = '';
+          let priorSpeaker = 'Analyst';
+          for (let j = i - 1; j >= 0; j--) {
+            if (qaTurns[j].role === 'analyst') {
+              priorQuestion = qaTurns[j].text;
+              priorSpeaker = qaTurns[j].speaker;
+              break;
+            }
+          }
+
+          let explicitDodge = false;
+          for (const dodge of LEXICONS.deflections) {
+            const dReg = new RegExp('\\b' + escapeRegex(dodge) + '\\b', 'i');
+            if (dReg.test(speech)) {
+              deflectionEvents.push({
+                type: 'Explicit Deflection / Offline Dodge',
+                speaker: turn.speaker,
+                analyst: priorSpeaker,
+                trigger_phrase: dodge,
+                deflected_statement: speech.length > 260 ? speech.slice(0, 260) + '...' : speech,
+                preceding_question: priorQuestion ? (priorQuestion.length > 240 ? priorQuestion.slice(0, 240) + '...' : priorQuestion) : 'Opening Q&A exchange'
+              });
+              explicitDodge = true;
+              break;
+            }
+          }
+
+          if (!explicitDodge && priorQuestion && numericQuestionRegex.test(priorQuestion)) {
+            if (!numberInAnswerRegex.test(speech) && words.length >= 25) {
+              numericEvasions.push({
+                type: 'Quantitative Evasion (Zero Numbers Given)',
+                speaker: turn.speaker,
+                analyst: priorSpeaker,
+                trigger_phrase: 'Zero figures provided on quantitative query',
+                deflected_statement: speech.length > 260 ? speech.slice(0, 260) + '...' : speech,
+                preceding_question: priorQuestion.length > 240 ? priorQuestion.slice(0, 240) + '...' : priorQuestion
+              });
+            }
+          }
+
+          const hedgesFound = LEXICONS.hedges.filter(h => new RegExp('\\b' + escapeRegex(h) + '\\b', 'i').test(speech));
+          if (hedgesFound.length >= 2) {
+            hedgedResponses.push({
+              speaker: turn.speaker,
+              hedge_count: hedgesFound.length,
+              hedges: hedgesFound,
+              statement: speech.length > 260 ? speech.slice(0, 260) + '...' : speech
+            });
+          }
+        }
+      }
+
+      const allEvasions = [...deflectionEvents, ...numericEvasions.slice(0, 5)];
+      const hedgeDensity = (hedgedResponses.length / Math.max(1, totalMgmtTurns)) * 100;
+      const deflectionRate = (allEvasions.length / Math.max(1, totalMgmtTurns)) * 100;
+
+      const candorPenalty = (deflectionEvents.length * 1.35) + (numericEvasions.slice(0, 5).length * 0.65) + (hedgeDensity * 0.07);
+      const candorScore = Number(Math.max(1.0, Math.min(10.0, 10.0 - candorPenalty)).toFixed(1));
+
+      // Evaluate Red Flags
+      const redFlags = [];
+      if (allEvasions.length >= 2) {
+        redFlags.push({
+          severity: allEvasions.length >= 4 ? 'Severe' : 'Moderate',
+          category: 'Management Candor / Question Dodging',
+          finding: `Management deflected ${deflectionEvents.length} inquiry(s) offline and gave ${numericEvasions.length} non-numeric evasion(s) during Q&A.`,
+          sample: allEvasions[0].trigger_phrase
+        });
+      }
+
+      const softTargets = guidanceRecords.filter(g => g.firmness === 'Hedged / Soft');
+      if (softTargets.length > 0) {
+        const softRatio = softTargets.length / Math.max(1, guidanceRecords.length);
+        redFlags.push({
+          severity: (softTargets.length >= 4 || softRatio >= 0.6) ? 'Severe' : 'Moderate',
+          category: 'Guidance Reliability / Soft Targets',
+          finding: `${softTargets.length} of ${guidanceRecords.length} forward target(s) (${Math.round(softRatio * 100)}%) were softened with conditionality or hedge words.`,
+          sample: softTargets[0].sentence.slice(0, 180)
+        });
+      }
+
+      let rfHits = [];
+      for (const rfWord of LEXICONS.redFlags) {
+        const matches = [...cleanText.matchAll(new RegExp(`([^.?!]*\\b${escapeRegex(rfWord)}\\b[^.?!]*)`, 'gi'))];
+        if (matches.length > 0) {
+          rfHits.push({ word: rfWord, count: matches.length, sample: matches[0][1].trim() });
+        }
+      }
+      rfHits.sort((a, b) => b.count - a.count);
+      const totalRfCount = rfHits.reduce((acc, item) => acc + item.count, 0);
+      if (totalRfCount >= 3) {
+        const topTerms = rfHits.slice(0, 4).map(x => `'${x.word}' (${x.count}x)`).join(', ');
+        redFlags.push({
+          severity: totalRfCount >= 8 ? 'Severe' : 'Moderate',
+          category: 'Operational Headwinds & Delays',
+          finding: `Detected ${totalRfCount} mentions of operational stress markers across transcript: ${topTerms}.`,
+          sample: rfHits[0].sample.slice(0, 180)
+        });
+      }
+
+      let stressHits = [];
+      for (const stWord of LEXICONS.balanceSheetStress) {
+        const matches = [...cleanText.matchAll(new RegExp(`([^.?!]*\\b${escapeRegex(stWord)}\\b[^.?!]*)`, 'gi'))];
+        if (matches.length >= 3) {
+          stressHits.push({ word: stWord, count: matches.length, sample: matches[0][1].trim() });
+        }
+      }
+      stressHits.sort((a, b) => b.count - a.count);
+      if (stressHits.length > 0) {
+        redFlags.push({
+          severity: stressHits[0].count >= 7 ? 'Severe' : 'Moderate',
+          category: 'Balance Sheet / Working Capital Focus',
+          finding: `Elevated discussion around '${stressHits[0].word}' (${stressHits[0].count} mentions) and balance sheet liquidity metrics.`,
+          sample: stressHits[0].sample.slice(0, 180)
+        });
+      }
+
+      const severeCount = redFlags.filter(f => f.severity === 'Severe').length;
+      let credibilityRating = 'Promotional / Unreliable';
+      if (candorScore >= 8.5 && severeCount === 0) credibilityRating = 'Exceptional';
+      else if (candorScore >= 7.0 && severeCount === 0) credibilityRating = 'Strong';
+      else if (candorScore >= 5.5 && severeCount <= 1) credibilityRating = 'Moderate';
+      else if (candorScore >= 3.8 && severeCount <= 2) credibilityRating = 'Weak';
+
+      return {
+        metadata: { company, period, filename, wordCount },
+        qaAudit: {
+          candorScore,
+          totalMgmtTurns,
+          totalAnalystQuestions,
+          deflectionEvents: allEvasions,
+          explicitDeflectionCount: deflectionEvents.length,
+          numericEvasionCount: numericEvasions.length,
+          hedgedResponses,
+          deflectionRatePct: Number(deflectionRate.toFixed(1)),
+          hedgeDensityPct: Number(hedgeDensity.toFixed(1))
+        },
+        guidanceRecords,
+        capexDebt: { capex: capexList, debt: debtList },
+        marginDrivers,
+        redFlags,
+        credibilityRating
+      };
+    }
+
+    function getCredibilityBadgeClass(rating) {
+      if (rating === 'Exceptional' || rating === 'Strong') return 'badge-firm';
+      if (rating === 'Moderate') return 'badge-mod';
+      return 'badge-severe';
+    }
+
+    // 3. Render UI
+    function renderAll() {
+      const emptyBox = document.getElementById('emptyStateBox');
+      const workspace = document.getElementById('analysisWorkspace');
+      const btnExport = document.getElementById('btnExportHtml');
+      const btnClear = document.getElementById('btnClearAll');
+
+      if (analyzedCalls.length === 0) {
+        emptyBox.classList.remove('hidden');
+        workspace.classList.add('hidden');
+        btnExport.classList.add('hidden');
+        btnClear.classList.add('hidden');
+        return;
+      }
+
+      emptyBox.classList.add('hidden');
+      workspace.classList.remove('hidden');
+      btnExport.classList.remove('hidden');
+      btnClear.classList.remove('hidden');
+
+      if (activeCallIndex >= analyzedCalls.length) activeCallIndex = analyzedCalls.length - 1;
+
+      // Multi-call section
+      const multiSec = document.getElementById('multiCallSection');
+      if (analyzedCalls.length >= 2) {
+        multiSec.classList.remove('hidden');
+        const first = analyzedCalls[0];
+        const last = analyzedCalls[analyzedCalls.length - 1];
+        const candorDelta = Number((last.qaAudit.candorScore - first.qaAudit.candorScore).toFixed(1));
+        const hedgeDelta = Number((last.qaAudit.hedgeDensityPct - first.qaAudit.hedgeDensityPct).toFixed(1));
+        const deflectDelta = Number((last.qaAudit.deflectionRatePct - first.qaAudit.deflectionRatePct).toFixed(1));
+
+        let trajText = 'Stable Communication Posture';
+        let trajClass = 'badge-neutral';
+        if (candorDelta <= -1.0 || hedgeDelta >= 10.0) {
+          trajText = 'Deteriorating Transparency (Rising Defensiveness)';
+          trajClass = 'badge-severe';
+        } else if (candorDelta >= 1.0 && hedgeDelta <= -5.0) {
+          trajText = 'Improving Candor & Execution Clarity';
+          trajClass = 'badge-firm';
+        }
+
+        const tBadge = document.getElementById('trajectoryBadge');
+        tBadge.className = `badge ${trajClass}`;
+        tBadge.textContent = trajText;
+
+        document.getElementById('trajectorySummary').textContent =
+          `Comparing ${analyzedCalls.length} loaded concalls from ${first.metadata.period} to ${last.metadata.period} • Candor Δ: ${candorDelta >= 0 ? '+' : ''}${candorDelta} pts | Hedge Density Δ: ${hedgeDelta >= 0 ? '+' : ''}${hedgeDelta}% | Deflection Rate Δ: ${deflectDelta >= 0 ? '+' : ''}${deflectDelta}%`;
+
+        const tbody = document.getElementById('multiCallTableBody');
+        tbody.innerHTML = analyzedCalls.map((c, idx) => {
+          const firmCnt = c.guidanceRecords.filter(g => g.firmness === 'Firm Commitment').length;
+          const softCnt = c.guidanceRecords.filter(g => g.firmness === 'Hedged / Soft').length;
+          const isCurrent = idx === activeCallIndex;
+          return `
+            <tr class="${isCurrent ? 'bg-[#1f2937]/60' : 'hover:bg-[#1c2128]'} transition">
+              <td class="p-3">
+                <div class="font-bold text-[#f0f6fc]">${escapeHtml(c.metadata.company)} — ${escapeHtml(c.metadata.period)}</div>
+                <div class="text-[11px] text-[#8b949e] mono">${escapeHtml(c.metadata.filename)} (${c.metadata.wordCount.toLocaleString()} words)</div>
+              </td>
+              <td class="p-3 font-bold text-[#f0f6fc] mono">${c.qaAudit.candorScore} / 10</td>
+              <td class="p-3"><span class="badge ${getCredibilityBadgeClass(c.credibilityRating)}">${escapeHtml(c.credibilityRating)}</span></td>
+              <td class="p-3 mono">${c.qaAudit.deflectionRatePct}% (${c.qaAudit.deflectionEvents.length})</td>
+              <td class="p-3 mono">${c.qaAudit.hedgeDensityPct}%</td>
+              <td class="p-3 mono">${c.guidanceRecords.length} <span class="text-[#8b949e]">(${firmCnt} Firm / ${softCnt} Soft)</span></td>
+              <td class="p-3 mono">${c.redFlags.length}</td>
+              <td class="p-3">
+                <button type="button" data-idx="${idx}" class="btnSelectCallTab px-2.5 py-1 rounded text-xs font-semibold ${isCurrent ? 'bg-[#58a6ff] text-[#0d1117]' : 'bg-[#21262d] text-[#c9d1d9] hover:bg-[#30363d]'}">
+                  ${isCurrent ? 'Viewing' : 'Inspect'}
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } else {
+        multiSec.classList.add('hidden');
+      }
+
+      // Tabs
+      const tabsContainer = document.getElementById('callTabsContainer');
+      tabsContainer.innerHTML = analyzedCalls.map((c, idx) => {
+        const active = idx === activeCallIndex;
+        return `
+          <button type="button" data-idx="${idx}" class="btnSelectCallTab px-3.5 py-2 rounded-lg text-xs font-semibold border transition flex items-center gap-2 ${
+            active
+              ? 'bg-[#58a6ff] text-[#0d1117] border-[#58a6ff]'
+              : 'bg-[#161b22] text-[#c9d1d9] border-[#30363d] hover:border-[#58a6ff]'
+          }">
+            <span>#${idx + 1} ${escapeHtml(c.metadata.company)} (${escapeHtml(c.metadata.period)})</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] mono ${active ? 'bg-[#0d1117]/20 text-[#0d1117]' : 'bg-[#21262d] text-[#8b949e]'}">${c.qaAudit.candorScore}/10</span>
+          </button>
+        `;
+      }).join('');
+
+      document.querySelectorAll('.btnSelectCallTab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeCallIndex = Number(btn.getAttribute('data-idx'));
+          renderAll();
+        });
+      });
+
+      renderActiveCallDetail();
+    }
+
+    function renderActiveCallDetail() {
+      const current = analyzedCalls[activeCallIndex];
+      if (!current) return;
+
+      const credBadge = document.getElementById('activeCredibilityBadge');
+      credBadge.className = `badge ${getCredibilityBadgeClass(current.credibilityRating)} text-sm`;
+      credBadge.textContent = current.credibilityRating;
+
+      document.getElementById('statCandor').textContent = `${current.qaAudit.candorScore} / 10`;
+      document.getElementById('statTurnsSub').textContent = `${current.qaAudit.totalMgmtTurns} mgmt replies across ${current.qaAudit.totalAnalystQuestions} analyst turns`;
+
+      document.getElementById('statDeflectionRate').textContent = `${current.qaAudit.deflectionRatePct}%`;
+      document.getElementById('statDeflectionSub').textContent = `${current.qaAudit.explicitDeflectionCount} offline dodges + ${current.qaAudit.numericEvasionCount} numeric evasions`;
+
+      document.getElementById('statHedgeDensity').textContent = `${current.qaAudit.hedgeDensityPct}%`;
+      document.getElementById('statHedgeSub').textContent = `${current.qaAudit.hedgedResponses.length} heavily hedged Q&A replies`;
+
+      const firmCount = current.guidanceRecords.filter(g => g.firmness === 'Firm Commitment').length;
+      const softCount = current.guidanceRecords.filter(g => g.firmness === 'Hedged / Soft').length;
+      document.getElementById('statTargetsCount').textContent = `${current.guidanceRecords.length}`;
+      document.getElementById('statTargetsSub').textContent = `${firmCount} Firm • ${softCount} Soft/Hedged`;
+
+      // Red Flags
+      const rfContainer = document.getElementById('redFlagsContainer');
+      if (current.redFlags.length === 0) {
+        rfContainer.innerHTML = `<p class="text-sm text-[#3fb950]">No severe deterministic red flags or evasions detected in this transcript.</p>`;
+      } else {
+        rfContainer.innerHTML = `
+          <table class="w-full border-collapse text-left text-xs md:text-sm">
+            <thead>
+              <tr class="bg-[#21262d] text-[#f0f6fc] border-b border-[#30363d]">
+                <th class="p-3">Severity</th>
+                <th class="p-3">Category</th>
+                <th class="p-3">Forensic Finding</th>
+                <th class="p-3">Transcript Evidence</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#30363d]">
+              ${current.redFlags.map(fl => `
+                <tr>
+                  <td class="p-3"><span class="badge ${fl.severity === 'Severe' ? 'badge-severe' : 'badge-mod'}">${escapeHtml(fl.severity)}</span></td>
+                  <td class="p-3 font-semibold text-[#f0f6fc]">${escapeHtml(fl.category)}</td>
+                  <td class="p-3">${escapeHtml(fl.finding)}</td>
+                  <td class="p-3 mono text-xs text-[#8b949e]">${escapeHtml(fl.sample)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      // Guidance Table
+      renderGuidanceTable();
+
+      // Deflections
+      const defContainer = document.getElementById('deflectionsContainer');
+      if (current.qaAudit.deflectionEvents.length === 0) {
+        defContainer.innerHTML = `<p class="text-sm text-[#3fb950]">Zero explicit question deflections or quantitative evasions identified in Q&A session.</p>`;
+      } else {
+        defContainer.innerHTML = current.qaAudit.deflectionEvents.map(ev => `
+          <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4 space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-bold text-[#f85149] mono">[${escapeHtml(ev.type)}] Trigger: "${escapeHtml(ev.trigger_phrase)}"</span>
+              <span class="text-xs text-[#8b949e]">Speaker: <strong class="text-[#c9d1d9]">${escapeHtml(ev.speaker)}</strong></span>
+            </div>
+            <div class="border-l-2 border-[#58a6ff] bg-[#161b22] p-2.5 text-xs italic">
+              <strong class="not-italic text-[#58a6ff]">Analyst (${escapeHtml(ev.analyst)}):</strong> ${escapeHtml(ev.preceding_question)}
+            </div>
+            <div class="border-l-2 border-[#f85149] bg-[#161b22] p-2.5 text-xs italic">
+              <strong class="not-italic text-[#f85149]">Management Response:</strong> ${escapeHtml(ev.deflected_statement)}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Capex, Debt & Margin Drivers
+      const drvContainer = document.getElementById('driversContainer');
+      const capexHtml = current.capexDebt.capex.length > 0
+        ? current.capexDebt.capex.slice(0, 10).map(c => `<li class="border-b border-[#30363d]/60 pb-2"><span class="text-[#58a6ff] font-semibold mono">[${escapeHtml(c.figures.join(', '))}]</span> ${escapeHtml(c.sentence)}</li>`).join('')
+        : `<li class="text-[#8b949e]">No explicit capex figures matched in this transcript.</li>`;
+
+      const debtHtml = current.capexDebt.debt.length > 0
+        ? current.capexDebt.debt.slice(0, 10).map(d => `<li class="border-b border-[#30363d]/60 pb-2"><span class="text-[#d29922] font-semibold mono">[${escapeHtml(d.figures.join(', '))}]</span> ${escapeHtml(d.sentence)}</li>`).join('')
+        : `<li class="text-[#8b949e]">No explicit debt or leverage figures highlighted.</li>`;
+
+      const marginHtml = current.marginDrivers.length > 0
+        ? current.marginDrivers.slice(0, 10).map(m => {
+            const qStr = m.quantums.length > 0 ? ` (${m.quantums.join(', ')})` : '';
+            return `<li class="border-b border-[#30363d]/60 pb-2"><span class="text-[#3fb950] font-semibold mono">[${escapeHtml(m.drivers.join(', '))}${escapeHtml(qStr)}]</span> ${escapeHtml(m.statement)}</li>`;
+          }).join('')
+        : `<li class="text-[#8b949e]">No specific margin driver statements matched.</li>`;
+
+      drvContainer.innerHTML = `
+        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4 space-y-2">
+          <h3 class="text-sm font-bold text-[#f0f6fc]">Capex & Capacity Disclosures (${current.capexDebt.capex.length})</h3>
+          <ul class="space-y-2 text-xs leading-relaxed">${capexHtml}</ul>
+        </div>
+        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4 space-y-2">
+          <h3 class="text-sm font-bold text-[#f0f6fc]">Debt & Working Capital (${current.capexDebt.debt.length})</h3>
+          <ul class="space-y-2 text-xs leading-relaxed">${debtHtml}</ul>
+        </div>
+        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4 space-y-2">
+          <h3 class="text-sm font-bold text-[#f0f6fc]">Margin & Profitability Drivers (${current.marginDrivers.length})</h3>
+          <ul class="space-y-2 text-xs leading-relaxed">${marginHtml}</ul>
+        </div>
+      `;
+    }
+
+    function renderGuidanceTable() {
+      const current = analyzedCalls[activeCallIndex];
+      if (!current) return;
+      const filterVal = document.getElementById('guidanceFilter').value;
+      const records = filterVal === 'ALL'
+        ? current.guidanceRecords
+        : current.guidanceRecords.filter(g => g.firmness === filterVal);
+
+      const gContainer = document.getElementById('guidanceContainer');
+      if (records.length === 0) {
+        gContainer.innerHTML = `<p class="text-xs text-[#8b949e]">No guidance statements matched the selected filter.</p>`;
+        return;
+      }
+
+      gContainer.innerHTML = `
+        <table class="w-full border-collapse text-left text-xs md:text-sm">
+          <thead>
+            <tr class="bg-[#21262d] text-[#f0f6fc] border-b border-[#30363d]">
+              <th class="p-3">Firmness</th>
+              <th class="p-3">Category</th>
+              <th class="p-3">Target / Quantum</th>
+              <th class="p-3">Timeline</th>
+              <th class="p-3">Verbatim Statement</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#30363d]">
+            ${records.map(g => {
+              const bCls = g.firmness === 'Firm Commitment' ? 'badge-firm' : (g.firmness === 'Hedged / Soft' ? 'badge-mod' : 'badge-neutral');
+              return `
+                <tr>
+                  <td class="p-3"><span class="badge ${bCls}">${escapeHtml(g.firmness)}</span></td>
+                  <td class="p-3 font-semibold text-[#f0f6fc]">${escapeHtml(g.metric_category)}</td>
+                  <td class="p-3 mono text-[#58a6ff] font-semibold">${escapeHtml(g.quantums.join(', '))}</td>
+                  <td class="p-3 mono">${escapeHtml(g.timelines.join(', '))}</td>
+                  <td class="p-3 text-xs leading-relaxed">${escapeHtml(g.sentence)}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    // Handle uploaded files
+    async function handleFiles(fileList) {
+      const files = Array.from(fileList);
+      if (files.length === 0) return;
+
+      const statusEl = document.getElementById('parseStatus');
+      statusEl.classList.remove('hidden');
+
+      for (let i = 0; i < files.length; i++) {
+        const f = files[i];
+        statusEl.textContent = `[*] Reading & auditing (${i + 1}/${files.length}): ${f.name}...`;
+        try {
+          const text = await extractTextFromFile(f);
+          if (text && text.trim().length > 50) {
+            const result = analyzeTranscript(text, f.name);
+            analyzedCalls.push(result);
+            activeCallIndex = analyzedCalls.length - 1;
+          } else {
+            statusEl.textContent = `[!] ${f.name} appears to be a scanned image PDF with no selectable text layer.`;
+          }
+        } catch (err) {
+          statusEl.textContent = `[!] Error reading ${f.name}: ${err.message}`;
+        }
+      }
+
+      statusEl.textContent = `[+] Audited ${analyzedCalls.length} concall transcript(s) offline.`;
+      renderAll();
+    }
+
+    // Export standalone HTML report
+    function exportStandaloneReport() {
+      if (analyzedCalls.length === 0) return;
+      const current = analyzedCalls[activeCallIndex];
+      const reportHtml = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Institutional Autopsy — ${escapeHtml(current.metadata.company)} (${escapeHtml(current.metadata.period)})</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0d1117; color: #c9d1d9; padding: 30px; line-height: 1.5; }
+  .container { max-width: 1150px; margin: 0 auto; }
+  h1, h2, h3 { color: #f0f6fc; margin-top: 0; }
+  .section { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th, td { border: 1px solid #30363d; padding: 10px; text-align: left; font-size: 13px; }
+  th { background: #21262d; color: #f0f6fc; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>CONCALL CONFESSIONS // ${escapeHtml(current.metadata.company)} (${escapeHtml(current.metadata.period)})</h1>
+    <p>Candor Score: <strong>${current.qaAudit.candorScore}/10</strong> | Credibility Read: <strong>${escapeHtml(current.credibilityRating)}</strong> | Deflection Rate: <strong>${current.qaAudit.deflectionRatePct}%</strong> | Hedge Density: <strong>${current.qaAudit.hedgeDensityPct}%</strong></p>
+    ${document.getElementById('multiCallSection').classList.contains('hidden') ? '' : `<div class="section"><h2>Multi-Concall Comparison</h2>${document.getElementById('multiCallSection').innerHTML}</div>`}
+    <div class="section"><h2>Forensic Red Flags</h2>${document.getElementById('redFlagsContainer').innerHTML}</div>
+    <div class="section"><h2>Forward Guidance (${current.guidanceRecords.length})</h2>${document.getElementById('guidanceContainer').innerHTML}</div>
+    <div class="section"><h2>Audited Q&A Deflections</h2>${document.getElementById('deflectionsContainer').innerHTML}</div>
+    <div class="section"><h2>Capex, Debt & Margin Drivers</h2>${document.getElementById('driversContainer').innerHTML}</div>
+  </div>
+</body>
+</html>`;
+      const blob = new Blob([reportHtml], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `autopsy_${current.metadata.company.replace(/\s+/g, '_')}_${current.metadata.period.replace(/\s+/g, '_')}.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Event Listeners
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+
+    document.getElementById('btnSelectFiles').addEventListener('click', (e) => {
+      e.stopPropagation();
+      fileInput.click();
+    });
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drop-active');
+    });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drop-active'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drop-active');
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleFiles(e.dataTransfer.files);
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        handleFiles(e.target.files);
+        fileInput.value = '';
+      }
+    });
+
+    document.getElementById('btnPasteModal').addEventListener('click', () => {
+      document.getElementById('pastePanel').classList.toggle('hidden');
+    });
+    document.getElementById('btnClosePaste').addEventListener('click', () => {
+      document.getElementById('pastePanel').classList.add('hidden');
+    });
+    document.getElementById('btnRunPasted').addEventListener('click', () => {
+      const title = document.getElementById('pasteTitleInput').value.trim() || `Pasted_Concall_${analyzedCalls.length + 1}`;
+      const raw = document.getElementById('pasteTextArea').value;
+      if (raw && raw.trim().length > 50) {
+        const res = analyzeTranscript(raw, `${title}.txt`, title);
+        analyzedCalls.push(res);
+        activeCallIndex = analyzedCalls.length - 1;
+        document.getElementById('pasteTextArea').value = '';
+        document.getElementById('pasteTitleInput').value = '';
+        document.getElementById('pastePanel').classList.add('hidden');
+        renderAll();
+      }
+    });
+
+    document.getElementById('guidanceFilter').addEventListener('change', renderGuidanceTable);
+    document.getElementById('btnExportHtml').addEventListener('click', exportStandaloneReport);
+    document.getElementById('btnClearAll').addEventListener('click', () => {
+      analyzedCalls = [];
+      activeCallIndex = 0;
+      document.getElementById('parseStatus').classList.add('hidden');
+      renderAll();
+    });
+  </script>
+</body>
+</html>

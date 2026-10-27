@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Institutional Earnings Call Autopsy Report</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --heading: #f0f6fc;
+      --accent: #58a6ff;
+      --danger: #f85149;
+      --warning: #d29922;
+      --success: #3fb950;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      margin: 0;
+      padding: 30px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    h1, h2, h3 { color: var(--heading); margin-top: 0; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .badge-severe { background: rgba(248, 81, 73, 0.2); color: var(--danger); border: 1px solid var(--danger); }
+    .badge-mod { background: rgba(210, 153, 34, 0.2); color: var(--warning); border: 1px solid var(--warning); }
+    .badge-firm { background: rgba(63, 185, 80, 0.2); color: var(--success); border: 1px solid var(--success); }
+    .badge-soft { background: rgba(210, 153, 34, 0.2); color: var(--warning); border: 1px solid var(--warning); }
+    
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 30px; }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .stat-val { font-size: 26px; font-weight: 700; color: var(--heading); margin-top: 5px; }
+    
+    .section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 14px;
+    }
+    th { background: #21262d; color: var(--heading); }
+    tr:nth-child(even) { background: #11151c; }
+    
+    .quote-box {
+      border-left: 3px solid var(--accent);
+      background: #1c2128;
+      padding: 10px 14px;
+      margin: 8px 0;
+      font-style: italic;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>CONCALL CONFESSIONS // Institutional Autopsy</h1>
+        <p style="margin: 0; color: #8b949e;">{{ COMPANY_HEADER }} • Deterministic Rule-Engine • 100% Offline Zero-API Architecture</p>
+      </div>
+      <div>
+        <span style="font-size: 14px;">Execution Credibility Read:</span>
+        <span class="badge {{ CREDIBILITY_BADGE_CLASS }}" style="font-size: 15px;">{{ CREDIBILITY_RATING }}</span>
+      </div>
+    </div>
+
+    <!-- Executive Scorecard Metrics -->
+    <div class="grid">
+      <div class="stat-card">
+        <div style="color: #8b949e; font-size: 13px;">Management Candor Score</div>
+        <div class="stat-val">{{ CANDOR_SCORE }} / 10</div>
+      </div>
+      <div class="stat-card">
+        <div style="color: #8b949e; font-size: 13px;">Question Deflection Rate</div>
+        <div class="stat-val">{{ DEFLECTION_RATE }}%</div>
+      </div>
+      <div class="stat-card">
+        <div style="color: #8b949e; font-size: 13px;">Q&A Hedge Density</div>
+        <div class="stat-val">{{ HEDGE_DENSITY }}%</div>
+      </div>
+      <div class="stat-card">
+        <div style="color: #8b949e; font-size: 13px;">Explicit Targets Extracted</div>
+        <div class="stat-val">{{ TARGETS_COUNT }}</div>
+      </div>
+    </div>
+
+    {{ MULTI_CALL_SECTION }}
+
+    <!-- Forensic Red Flags -->
+    <div class="section">
+      <h2>Forensic Red Flags & Evidentiary Checks</h2>
+      {{ RED_FLAGS_TABLE }}
+    </div>
+
+    <!-- Guidance Tracker -->
+    <div class="section">
+      <h2>Forward Guidance & Numerical Commitments</h2>
+      {{ GUIDANCE_TABLE }}
+    </div>
+
+    <!-- Question Dodges & Deflections Under Analyst Pressure -->
+    <div class="section">
+      <h2>Audited Q&A Deflections ("Taken Offline" / Non-Answers)</h2>
+      {{ DEFLECTIONS_SECTION }}
+    </div>
+
+    <!-- Capex, Debt & Margin Drivers -->
+    <div class="section">
+      <h2>Capex, Debt & Margin Driver Disclosures</h2>
+      {{ DRIVERS_SECTION }}
+    </div>
+  </div>
+</body>
+</html>

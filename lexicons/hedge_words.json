@@ -1,0 +1,42 @@
+{
+  "conditionality": [
+    "subject to",
+    "contingent upon",
+    "depends on",
+    "depending on orders",
+    "based on market conditions",
+    "order inflows permitting",
+    "if all goes well",
+    "assuming no further",
+    "provided that",
+    "barring unforeseen"
+  ],
+  "vagueness": [
+    "roughly",
+    "approximate",
+    "around",
+    "give or take",
+    "ballpark",
+    "more or less",
+    "tentative",
+    "tentatively",
+    "in the vicinity of",
+    "broadly in line",
+    "some bit of"
+  ],
+  "hope_and_hesitation": [
+    "hopefully",
+    "we believe",
+    "we assume",
+    "we expect maybe",
+    "likely",
+    "probably",
+    "striving for",
+    "aspirational",
+    "not set in stone",
+    "yet to finalize",
+    "endeavor to",
+    "wait and watch",
+    "fingers crossed"
+  ]
+}

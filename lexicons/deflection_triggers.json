@@ -1,0 +1,40 @@
+{
+  "take_offline": [
+    "take this offline",
+    "take that offline",
+    "discuss offline",
+    "connect offline",
+    "take it offline",
+    "offline discussion",
+    "touch base offline",
+    "speak offline"
+  ],
+  "data_dodges": [
+    "don't have the exact figure",
+    "do not have the exact number",
+    "don't have the exact number",
+    "do not have that handy",
+    "don't have that handy",
+    "don't have the exact",
+    "team will share the details",
+    "investor relations will get back",
+    "will revert back",
+    "will get back to you",
+    "cannot share at this stage",
+    "not in a position to disclose",
+    "we do not provide guidance on",
+    "we don't give breakup",
+    "do not give segment breakup",
+    "too early to give guidance",
+    "premature to comment",
+    "difficult to quantify",
+    "hard to put a number"
+  ],
+  "repetition_deflections": [
+    "as i mentioned earlier",
+    "as already explained",
+    "as stated previously",
+    "like we said in the opening remarks",
+    "already answered that"
+  ]
+}
