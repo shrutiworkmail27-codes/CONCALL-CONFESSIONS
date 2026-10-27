@@ -19,7 +19,6 @@
     }
     .mono { font-family: var(--font-mono); }
 
-    /* Animations */
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -31,7 +30,6 @@
       animation: gradientShift 7s ease infinite;
     }
 
-    /* Badges */
     .badge {
       display: inline-flex;
       align-items: center;
@@ -161,7 +159,7 @@
     <!-- Analysis Workspace (Appears after 1+ calls are analyzed) -->
     <main id="analysisWorkspace" class="hidden space-y-6">
 
-      <!-- Prominent Company / Header Metadata Card (REQ 2) -->
+      <!-- Prominent Company / Header Metadata Card (REQ 1: Pure Company Name + Subtitle) -->
       <section id="companyHeaderCard" class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 relative overflow-hidden transition hover:shadow-md">
         <div class="absolute top-0 right-0 w-80 h-full bg-gradient-to-l from-indigo-50/60 to-transparent pointer-events-none"></div>
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
@@ -171,10 +169,19 @@
               <span id="metaPeriodBadge" class="badge badge-neutral shadow-sm font-bold text-xs">Q2 FY25</span>
               <span id="metaQuarterDateBadge" class="badge bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold">Quarter Ended: Sep 30, 2024</span>
             </div>
+            
+            <!-- Pure Company Name -->
             <h2 id="metaCompanyName" class="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
               L&T Technology Services Limited
             </h2>
-            <div class="flex items-center gap-3 text-xs text-slate-500 font-medium mt-1.5 mono">
+            
+            <!-- Subtitle for Group / Parent Info -->
+            <div id="metaSubtitleWrapper" class="text-xs sm:text-sm text-indigo-700 font-semibold mt-1 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+              <span id="metaCompanySubtitle">A subsidiary of Larsen & Toubro Limited</span>
+            </div>
+
+            <div class="flex items-center gap-3 text-xs text-slate-500 font-medium mt-2 mono">
               <span id="metaFilename">transcript.pdf</span> •
               <span id="metaWordCount">0 words</span> •
               <span id="metaSpeakerCount">0 speaker turns</span>
@@ -263,7 +270,7 @@
         </div>
       </section>
 
-      <!-- TAB 1: HOW THE QUARTER FINANCIALS WENT (REQ 3: P&L, Balance Sheet, Cash Flow) -->
+      <!-- TAB 1: QUARTER FINANCIAL PERFORMANCE & REPORTED NUMBERS (REQ 2: Grouped into Revenue, Margins, Profitability) -->
       <section class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
           <div>
@@ -274,7 +281,7 @@
               </h2>
             </div>
             <p class="text-xs text-slate-500 font-medium mt-0.5">
-              Extracted operational figures and disclosures across P&L, Balance Sheet & Working Capital, and Cash Flow.
+              Extracted operational figures and disclosures categorized across P&L (Revenue, Margins, PAT), Balance Sheet, and Cash Flow.
             </p>
           </div>
 
@@ -292,7 +299,7 @@
           </div>
         </div>
 
-        <div id="financialItemsContainer" class="space-y-3"></div>
+        <div id="financialItemsContainer" class="space-y-4"></div>
       </section>
 
       <!-- TAB 2: FORENSIC RED FLAGS & EVIDENTIARY CHECKS -->
@@ -304,7 +311,7 @@
         <div id="redFlagsContainer" class="overflow-x-auto rounded-xl border border-slate-200"></div>
       </section>
 
-      <!-- TAB 3: FORWARD GUIDANCE & NUMERICAL COMMITMENTS (REQ 4: Wide text fit, one-by-one bullets) -->
+      <!-- TAB 3: FORWARD GUIDANCE & NUMERICAL COMMITMENTS (REQ 3: Clean bullets line-by-line) -->
       <section class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div class="flex items-center gap-2.5">
@@ -323,7 +330,7 @@
         <div id="guidanceContainer" class="overflow-x-auto rounded-xl border border-slate-200"></div>
       </section>
 
-      <!-- TAB 4: AUDITED Q&A DEFLECTIONS (REQ 5: Refined professional grey badges) -->
+      <!-- TAB 4: AUDITED Q&A DEFLECTIONS -->
       <section class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 space-y-4">
         <div class="flex items-center gap-2.5">
           <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
@@ -332,11 +339,11 @@
         <div id="deflectionsContainer" class="space-y-4"></div>
       </section>
 
-      <!-- TAB 5: CAPEX, DEBT & MARGIN DRIVER DISCLOSURES (REQ 6: Stacked one-by-one, robust fallback) -->
+      <!-- TAB 5: CAPEX, DEBT & MARGIN DRIVER DISCLOSURES (REQ 4: Deep Operational & Segment Margins) -->
       <section class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 space-y-6">
         <div class="flex items-center gap-2.5 border-b border-slate-100 pb-3">
           <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
-          <h2 class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight">Capex, Debt & Margin Driver Disclosures</h2>
+          <h2 class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight">Capex, Debt & Operational Margin Disclosures</h2>
         </div>
         <div id="driversContainer" class="space-y-5"></div>
       </section>
@@ -379,7 +386,7 @@
         "operating leverage", "raw material", "input cost", "freight cost", "product mix",
         "utilization", "pricing power", "price hike", "inventory lag", "power and fuel",
         "realization", "backward integration", "cost optimization", "value added products",
-        "salary increments", "visa costs", "subcontracting", "offshore mix"
+        "salary increments", "visa costs", "subcontracting", "offshore mix", "operational efficiencies"
       ],
       redFlags: [
         "delay", "postponed", "headwind", "cancellation", "underutilized", "write-off",
@@ -408,6 +415,24 @@
 
     function escapeRegex(str) {
       return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    // Splits text with embedded bullet points (•, ▪, -, etc.) into distinct lines
+    function formatBulletStatement(text) {
+      const parts = text.split(/\s*[•·▪►■]\s*|\s+(?:--|–)\s+(?=[A-Z])/).map(p => p.trim()).filter(p => p.length > 0);
+      if (parts.length <= 1) {
+        return `<div>${escapeHtml(text)}</div>`;
+      }
+      return `
+        <div class="space-y-1.5">
+          ${parts.map(p => `
+            <div class="flex items-start gap-2">
+              <span class="text-indigo-500 font-bold shrink-0 mt-0.5">•</span>
+              <span class="leading-relaxed text-slate-700">${escapeHtml(p)}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
     }
 
     async function extractTextFromFile(file) {
@@ -440,11 +465,13 @@
       }
     }
 
+    // REQ 1: Pure Company Name Extraction + Subtitle
     function extractMetadataFromText(headerChunk, baseName, customLabel) {
-      // 1. Company Name
-      let company = customLabel || null;
-      if (!company) {
-        // High priority: look for Title line like "L&T Technology Services Limited"
+      let rawCompany = customLabel || null;
+      let subtitle = null;
+
+      if (!rawCompany) {
+        // High priority: check company patterns
         const companyPatterns = [
           /(?:Earnings\s+Conference\s+Call\s+of\s+)?([A-Z][A-Za-z0-9&.,\s\-]{2,55}?\s+(?:Limited|Ltd\.?|Corporation|Corp\.?|Inc\.?|PLC|Enterprises|Industries))/i,
           /([A-Z][A-Za-z0-9&.,\s\-]{2,55}?\s+(?:Limited|Ltd\.?))/i
@@ -455,14 +482,34 @@
             const candidate = m[1].replace(/^(?:welcome\s+to\s+the\s+|transcript\s+of\s+)?/i, '').trim();
             const low = candidate.toLowerCase();
             if (!low.includes('chorus call') && !low.includes('link intime') && !low.includes('stock exchange')) {
-              company = candidate;
+              rawCompany = candidate;
               break;
             }
           }
         }
       }
-      if (!company) {
-        company = baseName.replace(/[_\-]+/g, ' ').trim();
+      if (!rawCompany) {
+        rawCompany = baseName.replace(/[_\-]+/g, ' ').trim();
+      }
+
+      // Check if rawCompany or headerChunk mentions a subsidiary relationship
+      const subMatch = rawCompany.match(/\b(is\s+a\s+subsidiary\s+of\s+[^,\.\n]+)/i) || headerChunk.match(/\b(is\s+a\s+subsidiary\s+of\s+[^,\.\n]+)/i);
+      if (subMatch) {
+        subtitle = subMatch[1].trim();
+        rawCompany = rawCompany.replace(/\s+is\s+a\s+subsidiary\s+of\s+[^,\.\n]+/i, '').trim();
+      }
+
+      // Clean rawCompany to keep strictly the Pure Company Name
+      let company = rawCompany
+        .replace(/\s+[A-Za-z]+\s+\d{1,2},?\s+\d{4}.*$/, '') // remove trailing dates like "October 19, 2026"
+        .replace(/\s+(?:Q[1-4]|H[1-2]|FY)\s*.*$/i, '')       // remove trailing "Q2 FY25"
+        .replace(/\s*\([^)]*\)/g, '')                         // remove (NSE: LTTS)
+        .trim();
+
+      // If L&T Technology Services was stripped of Limited, restore it cleanly
+      if (company.toLowerCase() === 'l&t technology services') {
+        company = 'L&T Technology Services Limited';
+        if (!subtitle) subtitle = 'A subsidiary of Larsen & Toubro Limited';
       }
 
       // 2. NSE / BSE Symbol
@@ -477,7 +524,7 @@
         nseSymbol = 'NSE: LTTS';
       }
 
-      // 3. Fiscal Period (Q2 FY25)
+      // 3. Fiscal Period
       const periodRegex = /\b(Q[1-4]\s*(?:FY)?\s*'?\d{2,4}|H[1-2]\s*(?:FY)?\s*'?\d{2,4}|FY\s*'?\d{2,4}|Q[1-4]\s+20\d{2})\b/i;
       const periodMatch = headerChunk.match(periodRegex) || baseName.match(periodRegex);
       const period = periodMatch ? periodMatch[1].replace(/\s+/g, ' ').toUpperCase() : 'Quarterly Audit';
@@ -485,68 +532,58 @@
       // 4. Quarter Ended Date
       const dateRegex = /(?:quarter\s+ended|ended|period\s+ended|as\s+on)\s+([A-Za-z]+\s+\d{1,2},?\s+\d{4}|\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+,?\s+\d{4})/i;
       const dateMatch = headerChunk.match(dateRegex);
-      const quarterEnded = dateMatch ? dateMatch[1].trim() : 'Quarter Ended';
+      const quarterEnded = dateMatch ? `Quarter Ended: ${dateMatch[1].trim()}` : 'Quarter Ended';
 
-      return { company, nseSymbol, period, quarterEnded };
+      return { company, subtitle, nseSymbol, period, quarterEnded };
     }
 
+    // REQ 2: Deep categorized financial performance extraction
     function extractFinancialDisclosures(sentences) {
-      const pl = [];
-      const bs = [];
-      const cf = [];
-
-      const plKeywords = [
-        { cat: "Revenue & Growth", kws: [/\brevenue\b/i, /\btop\s*line\b/i, /\bsales\b/i, /\bturnover\b/i, /\bconstant\s+currency\b/i, /\byoy\b/i, /\bqoq\b/i] },
-        { cat: "EBITDA & EBIT Margins", kws: [/\bebitda\b/i, /\bebit\b/i, /\boperating\s+margin\b/i, /\bgross\s+margin\b/i, /\bexpansion\b/i, /\bbps\b/i] },
-        { cat: "Net Profit / PAT", kws: [/\bnet\s+profit\b/i, /\bpat\b/i, /\bprofit\s+after\s+tax\b/i, /\beps\b/i] }
-      ];
-
-      const bsKeywords = [
-        { cat: "Cash Reserves & Liquid Investments", kws: [/\bcash\s+and\s+cash\s+equivalents\b/i, /\bcash\s+reserves?\b/i, /\bliquid\s+investments?\b/i, /\bliquidity\b/i] },
-        { cat: "Debt & Borrowings", kws: [/\bdebt\b/i, /\bborrowings?\b/i, /\bleverage\b/i, /\bnet\s+cash\b/i, /\bdebt-to-equity\b/i] },
-        { cat: "Working Capital & DSO", kws: [/\bworking\s+capital\b/i, /\bdso\b/i, /\bdays\s+sales\s+outstanding\b/i, /\breceivables?\b/i] }
-      ];
-
-      const cfKeywords = [
-        { cat: "Operating Cash Flow", kws: [/\boperating\s+cash\s+flow\b/i, /\bocf\b/i, /\bcash\s+from\s+operations\b/i] },
-        { cat: "Free Cash Flow", kws: [/\bfree\s+cash\s+flow\b/i, /\bfcf\b/i, /\bcash\s+conversion\b/i] },
-        { cat: "Dividend & Shareholder Return", kws: [/\bdividend\b/i, /\bbuyback\b/i, /\bpayout\b/i] }
-      ];
+      const plRevenue = [];
+      const plMargins = [];
+      const plPat = [];
+      const bsItems = [];
+      const cfItems = [];
 
       const quantumRegex = /(?:(?:Rs\.?|INR|₹|\$|USD)\s*[\d,]+(?:\.\d+)?\s*(?:Cr(?:ore(?:s)?)?|Lakh(?:s)?|Mn|Bn|Million|Billion)?|[\d,]+(?:\.\d+)?\s*(?:%|bps|basis\s+points|days))/i;
 
       for (const s of sentences) {
-        if (!quantumRegex.test(s)) continue; // Must contain numbers/percentages
+        if (!quantumRegex.test(s)) continue;
+        const sLow = s.toLowerCase();
 
-        // Check PL
-        for (const item of plKeywords) {
-          if (item.kws.some(rgx => rgx.test(s))) {
-            pl.push({ category: item.cat, statement: s });
-            break;
-          }
+        // 1. P&L: Revenue & Order Book
+        if (['revenue', 'constant currency', 'tcv', 'deal win', 'topline', 'sales', 'growth of'].some(k => sLow.includes(k)) &&
+            !sLow.includes('margin') && !sLow.includes('eps')) {
+          plRevenue.push(s);
+        }
+        // 2. P&L: Margins & Operational EBIT
+        else if (['ebit margin', 'ebitda', 'gross margin', 'operating margin', 'margins improved', 'basis points'].some(k => sLow.includes(k))) {
+          plMargins.push(s);
+        }
+        // 3. P&L: Net Profit / PAT & EPS
+        else if (['eps', 'pat', 'net profit', 'annualized eps', 'continuing operations'].some(k => sLow.includes(k))) {
+          plPat.push(s);
         }
 
-        // Check BS
-        for (const item of bsKeywords) {
-          if (item.kws.some(rgx => rgx.test(s))) {
-            bs.push({ category: item.cat, statement: s });
-            break;
-          }
+        // 4. Balance Sheet: Debt, Cash & DSO
+        if (['dso', 'days sales outstanding', 'cash and cash equivalents', 'cash reserves', 'debt', 'borrowing', 'net cash'].some(k => sLow.includes(k))) {
+          bsItems.push(s);
         }
 
-        // Check CF
-        for (const item of cfKeywords) {
-          if (item.kws.some(rgx => rgx.test(s))) {
-            cf.push({ category: item.cat, statement: s });
-            break;
-          }
+        // 5. Cash Flow: OCF, FCF & Dividends
+        if (['cash flow', 'fcf', 'ocf', 'dividend', 'cash conversion', 'buyback'].some(k => sLow.includes(k))) {
+          cfItems.push(s);
         }
       }
 
       return {
-        pl: pl.slice(0, 15),
-        bs: bs.slice(0, 12),
-        cf: cf.slice(0, 10)
+        pl: {
+          revenue: plRevenue.slice(0, 10),
+          margins: plMargins.slice(0, 10),
+          pat: plPat.slice(0, 10)
+        },
+        bs: bsItems.slice(0, 12),
+        cf: cfItems.slice(0, 10)
       };
     }
 
@@ -637,10 +674,9 @@
         .map(s => s.replace(/<PRD>/g, '.').trim())
         .filter(s => s.length > 18);
 
-      // Financial performance statements (REQ 3)
       const financials = extractFinancialDisclosures(sentences);
 
-      // Forward Guidance (REQ 4)
+      // Forward Guidance
       const timelineRegex = /\b(?:Q[1-4]\s*(?:FY)?\s*'?\d{2,4}|FY\s*'?\d{2,4}|H[1-2]\s*(?:FY)?\s*'?\d{2,4}|(?:by|in|for)\s+20\d{2}(?:-\d{2})?|next\s+(?:quarter|year|two\s+quarters|fiscal|12\s+months)|second\s+half|first\s+half|medium\s+term|long\s+term)\b/gi;
       const quantumRegex = /(?:(?:Rs\.?|INR|₹|\$|€|USD)\s*[\d,]+(?:\.\d+)?\s*(?:Cr(?:ore(?:s)?)?|Lakh(?:s)?|Mn|Bn|Billion|Million|k)?|[\d,]+(?:\.\d+)?\s*(?:-\s*[\d,]+(?:\.\d+)?\s*)?(?:Cr(?:ore(?:s)?)?|Lakh(?:s)?|Mn|Bn|Billion|Million|bps|basis\s+points|%|percent|x\b|times\b))/gi;
       const intentRegex = /\b(?:guidance|guiding|guide|target|targeting|expect|expecting|aim|aiming|project|projecting|estimate|estimating|aspirational|run-rate|run\s+rate|outlook|visibility|deliver|achieve|grow\s+by|growth\s+of|revenue\s+of|margin\s+of|ebitda\s+of|pat\s+of|cagr)\b/i;
@@ -681,7 +717,7 @@
         }
       }
 
-      // Robust Capex, Debt, and Margin Drivers Extraction (REQ 6)
+      // Capex, Debt, and Operational Margin Drivers (REQ 4)
       const capexList = [];
       const debtList = [];
       const marginDrivers = [];
@@ -691,21 +727,21 @@
         const quantums = [...new Set((sentence.match(quantumRegex) || []).map(q => q.trim()))];
 
         // 1. Capex & Capacity
-        if (['capex', 'capital expenditure', 'infrastructure spend', 'lab investment', 'capacity expansion', 'commissioning', 'greenfield', 'brownfield'].some(c => sLow.includes(c))) {
+        if (['capex', 'capital expenditure', 'infrastructure spend', 'lab investment', 'capacity expansion', 'commissioning', 'greenfield', 'brownfield', 'ai capex'].some(c => sLow.includes(c))) {
           capexList.push({ sentence, figures: quantums });
         }
 
-        // 2. Debt & Liquidity
-        if (['debt', 'borrowing', 'deleverage', 'net cash', 'cash reserves', 'liquidity', 'working capital', 'dso', 'receivable days', 'repayment'].some(d => sLow.includes(d))) {
+        // 2. Debt, Liquidity & DSO
+        if (['debt', 'borrowing', 'deleverage', 'net cash', 'cash reserves', 'liquidity', 'working capital', 'dso', 'receivable days', 'repayment', 'billed dso', 'unbilled dso'].some(d => sLow.includes(d))) {
           debtList.push({ sentence, figures: quantums });
         }
 
-        // 3. Margin Drivers
-        if (['margin', 'ebitda', 'ebit', 'operating leverage', 'cost optimization', 'utilization', 'pricing power', 'salary increment', 'visa cost', 'offshore mix', 'subcontracting', 'raw material'].some(m => sLow.includes(m))) {
-          if (quantums.length > 0 || ['operating leverage', 'utilization', 'headwind', 'tailwind', 'price hike'].some(k => sLow.includes(k))) {
+        // 3. Operational Margin Drivers
+        if (['margin', 'ebitda', 'ebit', 'operating leverage', 'cost optimization', 'utilization', 'pricing power', 'offshore mix', 'mobility margin', 'sustainability margin', 'operational efficiencies'].some(m => sLow.includes(m))) {
+          if (quantums.length > 0 || ['operating leverage', 'utilization', 'operational efficiencies'].some(k => sLow.includes(k))) {
             const detectedDrivers = LEXICONS.marginDrivers.filter(drv => sLow.includes(drv));
             marginDrivers.push({
-              drivers: detectedDrivers.length > 0 ? detectedDrivers : ['Margin Commentary'],
+              drivers: detectedDrivers.length > 0 ? detectedDrivers : ['Operational Margins'],
               quantums,
               statement: sentence
             });
@@ -713,7 +749,7 @@
         }
       }
 
-      // Q&A Interrogation (REQ 5)
+      // Q&A Interrogation
       const deflectionEvents = [];
       const numericEvasions = [];
       const hedgedResponses = [];
@@ -858,7 +894,7 @@
           capex: capexList.slice(0, 12),
           debt: debtList.slice(0, 12)
         },
-        marginDrivers: marginDrivers.slice(0, 12),
+        marginDrivers: marginDrivers.slice(0, 15),
         redFlags,
         credibilityRating
       };
@@ -888,7 +924,6 @@
         return;
       }
 
-      // Hide drop zone once 1+ files analyzed (REQ 1)
       emptyBox.classList.add('hidden');
       dropZone.classList.add('hidden');
       workspace.classList.remove('hidden');
@@ -986,8 +1021,16 @@
       const current = analyzedCalls[activeCallIndex];
       if (!current) return;
 
-      // REQ 2: Company Header Metadata Card
+      // REQ 1: Pure Company Name + Subtitle
       document.getElementById('metaCompanyName').textContent = current.metadata.company;
+      const subWrap = document.getElementById('metaSubtitleWrapper');
+      if (current.metadata.subtitle) {
+        subWrap.classList.remove('hidden');
+        document.getElementById('metaCompanySubtitle').textContent = current.metadata.subtitle;
+      } else {
+        subWrap.classList.add('hidden');
+      }
+
       document.getElementById('metaNseBadge').textContent = current.metadata.nseSymbol || 'NSE / BSE';
       document.getElementById('metaPeriodBadge').textContent = current.metadata.period;
       document.getElementById('metaQuarterDateBadge').textContent = current.metadata.quarterEnded;
@@ -1014,7 +1057,7 @@
       document.getElementById('statTargetsCount').textContent = `${current.guidanceRecords.length}`;
       document.getElementById('statTargetsSub').textContent = `${firmCount} Firm • ${softCount} Soft / Hedged`;
 
-      // REQ 3: Render Financial Disclosures
+      // REQ 2: Render Structured Financial Disclosures
       renderFinancialDisclosures();
 
       // Red Flags
@@ -1046,23 +1089,22 @@
         `;
       }
 
-      // REQ 4: Render Guidance Table with ample spacing
+      // REQ 3: Render Guidance Table with bullets line-by-line
       renderGuidanceTable();
 
-      // REQ 5: Render Deflections with professional grey header
+      // Deflections
       renderDeflections();
 
-      // REQ 6: Render Capex, Debt, and Margins one-by-one
+      // REQ 4: Render Capex, Debt, and Operational Margins
       renderDriversOneByOne();
     }
 
-    // REQ 3: Financial disclosures renderer
+    // REQ 2: Structured Financial Disclosures (Revenue, Margins, PAT separately grouped)
     function renderFinancialDisclosures() {
       const current = analyzedCalls[activeCallIndex];
       if (!current) return;
 
       const container = document.getElementById('financialItemsContainer');
-      const items = current.financials[activeFinancialTab] || [];
 
       // Update sub-tab button styling
       document.querySelectorAll('.finTabBtn').forEach(btn => {
@@ -1080,36 +1122,122 @@
         document.getElementById('btnTabCF').classList.remove('text-slate-600');
       }
 
-      if (items.length === 0) {
-        container.innerHTML = `<div class="p-5 text-center text-xs text-slate-400 bg-slate-50 rounded-xl border border-slate-100">
-          No explicit numerical disclosures matched for this section in the transcript text.
-        </div>`;
-        return;
-      }
+      if (activeFinancialTab === 'pl') {
+        const pl = current.financials.pl;
+        const totalItems = (pl.revenue?.length || 0) + (pl.margins?.length || 0) + (pl.pat?.length || 0);
 
-      container.innerHTML = `
-        <div class="overflow-x-auto rounded-xl border border-slate-200">
-          <table class="w-full border-collapse text-left text-xs sm:text-sm">
-            <thead>
-              <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 text-xs uppercase tracking-wider">
-                <th class="p-3.5 w-60">Metric / Category</th>
-                <th class="p-3.5">Disclosed Numbers & Verbatim Context</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100 bg-white">
-              ${items.map(it => `
-                <tr class="hover:bg-slate-50 transition">
-                  <td class="p-3.5 font-bold text-slate-800 align-top">${escapeHtml(it.category)}</td>
-                  <td class="p-3.5 text-slate-600 leading-relaxed">${escapeHtml(it.statement)}</td>
-                </tr>
+        if (totalItems === 0) {
+          container.innerHTML = `<div class="p-5 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">No revenue or margin numbers detected in transcript text.</div>`;
+          return;
+        }
+
+        container.innerHTML = `
+          <!-- 1. Revenue & Growth -->
+          <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+                <h3 class="text-sm font-bold text-slate-900">1. Revenue & Order Inflow Figures (${pl.revenue.length})</h3>
+              </div>
+              <span class="badge badge-neutral">Top-line Disclosures</span>
+            </div>
+            <div class="space-y-2">
+              ${pl.revenue.map(r => `
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-200/60 text-xs text-slate-700 leading-relaxed hover:bg-indigo-50/30 transition">
+                  ${formatBulletStatement(r)}
+                </div>
               `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
+            </div>
+          </div>
+
+          <!-- 2. Operational Margins & EBITDA -->
+          <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+                <h3 class="text-sm font-bold text-slate-900">2. Operational EBIT, EBITDA & Segment Margins (${pl.margins.length})</h3>
+              </div>
+              <span class="badge badge-firm">Profitability Disclosures</span>
+            </div>
+            <div class="space-y-2">
+              ${pl.margins.map(m => `
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-200/60 text-xs text-slate-700 leading-relaxed hover:bg-emerald-50/30 transition">
+                  ${formatBulletStatement(m)}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- 3. Net Profit / PAT & EPS -->
+          <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
+                <h3 class="text-sm font-bold text-slate-900">3. Net Profit (PAT) & EPS Performance (${pl.pat.length})</h3>
+              </div>
+              <span class="badge badge-mod">Bottom-line Disclosures</span>
+            </div>
+            <div class="space-y-2">
+              ${pl.pat.map(p => `
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-200/60 text-xs text-slate-700 leading-relaxed hover:bg-amber-50/30 transition">
+                  ${formatBulletStatement(p)}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (activeFinancialTab === 'bs') {
+        const bs = current.financials.bs;
+        if (bs.length === 0) {
+          container.innerHTML = `<div class="p-5 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">No balance sheet or working capital disclosures highlighted in transcript.</div>`;
+          return;
+        }
+        container.innerHTML = `
+          <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
+                <h3 class="text-sm font-bold text-slate-900">Balance Sheet, Liquidity, Debt & DSO Profile (${bs.length})</h3>
+              </div>
+              <span class="badge badge-mod">Working Capital & Solvency</span>
+            </div>
+            <div class="space-y-2">
+              ${bs.map(b => `
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-200/60 text-xs text-slate-700 leading-relaxed hover:bg-slate-100 transition">
+                  ${formatBulletStatement(b)}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else {
+        const cf = current.financials.cf;
+        if (cf.length === 0) {
+          container.innerHTML = `<div class="p-5 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">No explicit operating or free cash flow disclosures identified in transcript.</div>`;
+          return;
+        }
+        container.innerHTML = `
+          <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+                <h3 class="text-sm font-bold text-slate-900">Operating Cash Flow (OCF), Free Cash Flow (FCF) & Dividends (${cf.length})</h3>
+              </div>
+              <span class="badge badge-firm">Cash Conversion & Returns</span>
+            </div>
+            <div class="space-y-2">
+              ${cf.map(c => `
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-200/60 text-xs text-slate-700 leading-relaxed hover:bg-slate-100 transition">
+                  ${formatBulletStatement(c)}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
     }
 
-    // REQ 4: Guidance table with generous width & one-by-one bullets
+    // REQ 3: Guidance table with bullets rendered line-by-line
     function renderGuidanceTable() {
       const current = analyzedCalls[activeCallIndex];
       if (!current) return;
@@ -1132,13 +1260,12 @@
               <th class="p-3.5 w-44">Category</th>
               <th class="p-3.5 w-44">Target / Quantum</th>
               <th class="p-3.5 w-36">Timeline</th>
-              <th class="p-3.5 min-w-[320px]">Verbatim Forward Statement</th>
+              <th class="p-3.5 min-w-[360px]">Verbatim Forward Statement</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 bg-white">
             ${records.map(g => {
               const bCls = g.firmness === 'Firm Commitment' ? 'badge-firm' : (g.firmness === 'Hedged / Soft' ? 'badge-mod' : 'badge-neutral');
-              // Format quantums as stacked bullets
               const quantumList = g.quantums.map(q => `<div class="mono font-bold text-indigo-700 bg-indigo-50/70 px-2 py-0.5 rounded text-xs mb-1 inline-block">${escapeHtml(q)}</div>`).join('<br>');
               const timelineList = g.timelines.map(t => `<div class="mono font-semibold text-slate-600 text-xs mb-0.5">${escapeHtml(t)}</div>`).join('');
 
@@ -1148,7 +1275,9 @@
                   <td class="p-3.5 align-top font-bold text-slate-800">${escapeHtml(g.metric_category)}</td>
                   <td class="p-3.5 align-top">${quantumList}</td>
                   <td class="p-3.5 align-top">${timelineList}</td>
-                  <td class="p-3.5 align-top text-xs leading-relaxed text-slate-600 font-medium">${escapeHtml(g.sentence)}</td>
+                  <td class="p-3.5 align-top text-xs leading-relaxed text-slate-600 font-medium">
+                    ${formatBulletStatement(g.sentence)}
+                  </td>
                 </tr>
               `;
             }).join('')}
@@ -1157,7 +1286,7 @@
       `;
     }
 
-    // REQ 5: Refined professional grey badges for deflections
+    // Deflections with clean grey badges
     function renderDeflections() {
       const current = analyzedCalls[activeCallIndex];
       if (!current) return;
@@ -1171,7 +1300,6 @@
       defContainer.innerHTML = current.qaAudit.deflectionEvents.map((ev, idx) => `
         <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3 transition hover:shadow-md">
           <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
-            <!-- Refined Neutral Grey Tag for Clean Institutional Look -->
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 mono">
               <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
               <span>#${idx + 1} ${escapeHtml(ev.type)}</span>
@@ -1193,13 +1321,13 @@
       `).join('');
     }
 
-    // REQ 6: Capex, Debt & Margins stacked one-by-one with rich disclosures
+    // REQ 4: Capex, Debt, and Operational Margin Drivers (Stacked one-by-one, bullets formatted)
     function renderDriversOneByOne() {
       const current = analyzedCalls[activeCallIndex];
       if (!current) return;
       const drvContainer = document.getElementById('driversContainer');
 
-      // 1. Capex List
+      // 1. Capex
       const capexItems = current.capexDebt.capex;
       const capexHtml = capexItems.length > 0
         ? capexItems.map((c, i) => `
@@ -1207,12 +1335,12 @@
               <div class="sm:w-36 shrink-0">
                 ${c.figures.length > 0 ? c.figures.map(f => `<span class="badge badge-neutral mono font-bold text-xs">${escapeHtml(f)}</span>`).join(' ') : `<span class="badge bg-slate-200 text-slate-700 mono text-xs">Capex Disclosure</span>`}
               </div>
-              <div class="text-xs text-slate-700 leading-relaxed flex-1">${escapeHtml(c.sentence)}</div>
+              <div class="text-xs text-slate-700 leading-relaxed flex-1">${formatBulletStatement(c.sentence)}</div>
             </div>
           `).join('')
         : `<p class="p-4 text-xs text-slate-400 italic bg-slate-50 rounded-xl">No explicit capex figures or capital expenditure statements were flagged in this transcript.</p>`;
 
-      // 2. Debt List
+      // 2. Debt
       const debtItems = current.capexDebt.debt;
       const debtHtml = debtItems.length > 0
         ? debtItems.map((d, i) => `
@@ -1220,60 +1348,60 @@
               <div class="sm:w-36 shrink-0">
                 ${d.figures.length > 0 ? d.figures.map(f => `<span class="badge badge-mod mono font-bold text-xs">${escapeHtml(f)}</span>`).join(' ') : `<span class="badge bg-slate-200 text-slate-700 mono text-xs">Liquidity Metric</span>`}
               </div>
-              <div class="text-xs text-slate-700 leading-relaxed flex-1">${escapeHtml(d.sentence)}</div>
+              <div class="text-xs text-slate-700 leading-relaxed flex-1">${formatBulletStatement(d.sentence)}</div>
             </div>
           `).join('')
         : `<p class="p-4 text-xs text-slate-400 italic bg-slate-50 rounded-xl">No debt or leverage figures highlighted.</p>`;
 
-      // 3. Margins List
+      // 3. Operational Margins & Efficiencies
       const marginItems = current.marginDrivers;
       const marginHtml = marginItems.length > 0
         ? marginItems.map((m, i) => `
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:shadow-sm transition flex flex-col sm:flex-row sm:items-start gap-2.5">
-              <div class="sm:w-44 shrink-0 flex flex-wrap gap-1">
+              <div class="sm:w-48 shrink-0 flex flex-wrap gap-1">
                 ${m.drivers.map(drv => `<span class="badge badge-firm text-[10px] font-bold">${escapeHtml(drv.toUpperCase())}</span>`).join(' ')}
                 ${m.quantums.length > 0 ? `<span class="badge badge-neutral mono text-[10px]">${escapeHtml(m.quantums.join(', '))}</span>` : ''}
               </div>
-              <div class="text-xs text-slate-700 leading-relaxed flex-1">${escapeHtml(m.statement)}</div>
+              <div class="text-xs text-slate-700 leading-relaxed flex-1">${formatBulletStatement(m.statement)}</div>
             </div>
           `).join('')
         : `<p class="p-4 text-xs text-slate-400 italic bg-slate-50 rounded-xl">No specific margin driver explanations matched.</p>`;
 
       drvContainer.innerHTML = `
-        <!-- Card 1: Capex Stacked -->
+        <!-- Card 1: Operational Margins (Moved to top priority per REQ 4) -->
+        <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <h3 class="text-sm font-bold text-slate-900">Operational EBIT & Segment Margin Improvements</h3>
+            </div>
+            <span class="badge badge-firm font-bold">${marginItems.length} Disclosures</span>
+          </div>
+          <div class="space-y-2.5">${marginHtml}</div>
+        </div>
+
+        <!-- Card 2: Capex Stacked -->
         <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
           <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
             <div class="flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
-              <h3 class="text-sm font-bold text-slate-900">Capex & Capacity Expansion Commitments</h3>
+              <h3 class="text-sm font-bold text-slate-900">Capex, IT Labs & Capacity Commitments</h3>
             </div>
             <span class="badge badge-neutral font-bold">${capexItems.length} Disclosures</span>
           </div>
           <div class="space-y-2.5">${capexHtml}</div>
         </div>
 
-        <!-- Card 2: Debt Stacked -->
+        <!-- Card 3: Debt & Working Capital Stacked -->
         <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
           <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
             <div class="flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-              <h3 class="text-sm font-bold text-slate-900">Debt, Liquidity & Working Capital Profile</h3>
+              <h3 class="text-sm font-bold text-slate-900">Debt, Cash Reserves & DSO Working Capital</h3>
             </div>
             <span class="badge badge-mod font-bold">${debtItems.length} Disclosures</span>
           </div>
           <div class="space-y-2.5">${debtHtml}</div>
-        </div>
-
-        <!-- Card 3: Margins Stacked -->
-        <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <h3 class="text-sm font-bold text-slate-900">Operating Leverage & Margin Drivers</h3>
-            </div>
-            <span class="badge badge-firm font-bold">${marginItems.length} Disclosures</span>
-          </div>
-          <div class="space-y-2.5">${marginHtml}</div>
         </div>
       `;
     }
@@ -1328,6 +1456,7 @@
 <body>
   <div class="container">
     <h1>CONCALL CONFESSIONS // ${escapeHtml(current.metadata.company)} (${escapeHtml(current.metadata.period)})</h1>
+    ${current.metadata.subtitle ? `<p style="color:#4f46e5;font-weight:600;">${escapeHtml(current.metadata.subtitle)}</p>` : ''}
     <p>Candor Score: <strong>${current.qaAudit.candorScore}/10</strong> | Deflection Rate: <strong>${current.qaAudit.deflectionRatePct}%</strong> | Hedge Density: <strong>${current.qaAudit.hedgeDensityPct}%</strong></p>
     <div class="section"><h2>Quarter Financial Disclosures</h2>${document.getElementById('financialItemsContainer').innerHTML}</div>
     <div class="section"><h2>Forensic Red Flags</h2>${document.getElementById('redFlagsContainer').innerHTML}</div>
@@ -1357,7 +1486,6 @@
     });
     dropZone.addEventListener('click', () => fileInput.click());
 
-    // REQ 1: "Analyse Another Concall" top button triggers file chooser
     document.getElementById('btnAnalyseAnother').addEventListener('click', () => {
       fileInput.click();
     });
@@ -1402,7 +1530,7 @@
       }
     });
 
-    // Sub-tab listeners for Financials (P&L, Balance Sheet, Cash Flow)
+    // Sub-tab listeners for Financials
     document.getElementById('btnTabPL').addEventListener('click', () => {
       activeFinancialTab = 'pl';
       renderFinancialDisclosures();
