@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CONCALL CONFESSIONS // 100% Offline Multi-PDF Concall Forensic Analyzer</title>
+  <title>CONCALL CONFESSIONS // 100% Offline Concall Forensic Analyzer</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,30 +19,16 @@
     }
     .mono { font-family: var(--font-mono); }
 
-    /* Keyframe Animations */
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
-      50% { box-shadow: 0 0 0 14px rgba(99, 102, 241, 0); }
-    }
+    /* Animations */
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    @keyframes floatBadge {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-    @keyframes shimmer {
-      100% { transform: translateX(100%); }
-    }
-
-    .animate-pulse-glow { animation: pulseGlow 2.5s infinite; }
-    .animate-float { animation: floatBadge 3s ease-in-out infinite; }
     .hero-gradient {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
       background-size: 200% 200%;
-      animation: gradientShift 8s ease infinite;
+      animation: gradientShift 7s ease infinite;
     }
 
     /* Badges */
@@ -50,107 +36,98 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 4px 10px;
+      padding: 3px 10px;
       border-radius: 9999px;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.02em;
-      transition: all 0.2s ease;
     }
     .badge-severe { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
     .badge-mod { background: #fef3c7; color: #d97706; border: 1px solid #fcd34d; }
     .badge-firm { background: #dcfce7; color: #16a34a; border: 1px solid #86efac; }
     .badge-neutral { background: #e0e7ff; color: #4338ca; border: 1px solid #a5b4fc; }
 
-    /* Drag and Drop Hover */
     .drop-active {
       border-color: #6366f1 !important;
       background-color: #eef2ff !important;
       transform: scale(1.008);
-      box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.15), 0 8px 10px -6px rgba(99, 102, 241, 0.1);
+      box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.15);
     }
   </style>
 </head>
-<body class="min-h-screen p-4 sm:p-6 md:p-10 antialiased selection:bg-indigo-500 selection:text-white">
+<body class="min-h-screen p-4 sm:p-6 md:p-8 antialiased selection:bg-indigo-500 selection:text-white">
 
-  <!-- Ambient Decorative Background Glows -->
+  <!-- Ambient Glows -->
   <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-    <div class="absolute -top-40 -right-40 w-96 h-96 bg-indigo-200/50 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/3 -left-40 w-96 h-96 bg-purple-200/40 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-40 right-1/4 w-96 h-96 bg-pink-200/40 rounded-full blur-3xl"></div>
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-indigo-200/40 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -left-40 w-96 h-96 bg-purple-200/30 rounded-full blur-3xl"></div>
   </div>
 
-  <div class="max-w-7xl mx-auto space-y-8">
+  <div class="max-w-7xl mx-auto space-y-6">
 
-    <!-- Top Navigation & Brand Header -->
-    <header class="bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-sm rounded-2xl p-5 md:p-7 flex flex-col md:flex-row md:items-center justify-between gap-6 transition hover:shadow-md">
+    <!-- Top Navigation Header -->
+    <header class="bg-white/80 backdrop-blur-md border border-slate-200 shadow-sm rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-5 transition hover:shadow-md">
       <div>
-        <div class="flex items-center flex-wrap gap-2.5">
+        <div class="flex items-center flex-wrap gap-2">
           <span class="badge badge-neutral shadow-sm">
             <span class="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-ping"></span>
             100% OFFLINE • ZERO API
           </span>
-          <span class="badge badge-firm shadow-sm">
-            <span>⚡</span> MULTI-PDF DETECT ENGINE
-          </span>
-          <span class="badge bg-slate-100 text-slate-700 border border-slate-300 shadow-sm mono">
-            NSE / BSE / GLOBAL
-          </span>
+          <span class="badge badge-firm shadow-sm">⚡ INSTITUTIONAL FORENSIC ENGINE</span>
+          <span class="badge bg-slate-100 text-slate-700 border border-slate-300 mono font-semibold">NSE / BSE / GLOBAL</span>
         </div>
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight mt-3 text-slate-900">
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-2.5 text-slate-900">
           CONCALL <span class="text-transparent bg-clip-text hero-gradient">CONFESSIONS</span>
         </h1>
-        <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1.5 max-w-2xl">
-          Institutional earnings call autopsy engine. Quantifies management candor, deflective non-answers, hedge densities, and multi-quarter execution drift in 40 milliseconds.
+        <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">
+          Automated forensic interrogation of earnings calls: Management candor, question dodges, financial disclosures, and multi-quarter guidance audit.
         </p>
       </div>
 
       <!-- Action Buttons -->
       <div class="flex flex-wrap items-center gap-2.5">
-        <button id="btnPasteModal" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 shadow-sm hover:shadow transition flex items-center gap-1.5">
+        <button id="btnAnalyseAnother" type="button" class="hidden px-4 py-2.5 rounded-xl text-xs font-bold text-white hero-gradient shadow-md hover:shadow-lg transition flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          Analyse Another Concall
+        </button>
+        <button id="btnPasteModal" type="button" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 shadow-sm transition flex items-center gap-1.5">
           <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
           Paste Raw Text
         </button>
-        <button id="btnExportHtml" type="button" class="hidden px-4 py-2.5 rounded-xl text-xs font-bold text-white hero-gradient shadow-md hover:shadow-lg transition flex items-center gap-1.5">
+        <button id="btnExportHtml" type="button" class="hidden px-3.5 py-2.5 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white shadow-sm transition flex items-center gap-1.5">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-          Export Report (.html)
+          Export Report
         </button>
-        <button id="btnClearAll" type="button" class="hidden px-3.5 py-2.5 rounded-xl text-xs font-bold bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 shadow-sm transition">
+        <button id="btnClearAll" type="button" class="hidden px-3 py-2.5 rounded-xl text-xs font-bold bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 shadow-sm transition">
           Clear All
         </button>
       </div>
     </header>
 
-    <!-- Upload / Drag & Drop Interactive Card -->
-    <section id="dropZone" class="group bg-white/90 backdrop-blur-sm border-2 border-dashed border-indigo-200 hover:border-indigo-500 rounded-3xl p-8 sm:p-12 text-center transition-all duration-300 cursor-pointer shadow-sm hover:shadow-xl relative overflow-hidden">
+    <!-- Upload / Drag & Drop Card (Visible only initially, hidden once 1+ files are analyzed) -->
+    <section id="dropZone" class="group bg-white border-2 border-dashed border-indigo-200 hover:border-indigo-500 rounded-3xl p-8 sm:p-12 text-center transition-all duration-300 cursor-pointer shadow-sm hover:shadow-xl relative overflow-hidden">
       <input id="fileInput" type="file" accept=".pdf,.txt" multiple class="hidden">
-      
       <div class="max-w-xl mx-auto space-y-4 relative z-10">
-        <!-- Animated Icon Container -->
-        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-50 to-indigo-100 border border-indigo-200 flex items-center justify-center mx-auto text-indigo-600 font-extrabold text-xl mono shadow-inner group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-50 to-indigo-100 border border-indigo-200 flex items-center justify-center mx-auto text-indigo-600 font-extrabold text-xl shadow-inner group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
         </div>
-
-        <h2 class="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-800 tracking-tight">
+        <h2 class="text-lg sm:text-2xl font-extrabold text-slate-800 tracking-tight">
           Drop 1 or Multiple Concall Transcripts (<span class="text-indigo-600">.pdf</span> / <span class="text-indigo-600">.txt</span>)
         </h2>
-        
         <p class="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">
-          Drop a single earnings call PDF for deep forensic scrutiny, or upload <span class="font-bold text-slate-700">3–4 consecutive quarters</span> (<code class="bg-slate-100 px-1.5 py-0.5 rounded text-indigo-600 mono text-xs font-semibold">Q1.pdf</code> to <code class="bg-slate-100 px-1.5 py-0.5 rounded text-indigo-600 mono text-xs font-semibold">Q4.pdf</code>) to unlock full cross-quarter candor trajectories and guidance walk-backs.
+          Drop a single company earnings call PDF for deep interrogation, or select <span class="font-bold text-slate-700">3–4 consecutive quarters</span> to compare management candor, financial trajectory, and guidance walk-backs side-by-side.
         </p>
-
         <div class="pt-2">
-          <button id="btnSelectFiles" type="button" class="px-6 py-3 rounded-xl text-sm font-bold text-white hero-gradient shadow-md hover:shadow-indigo-300/50 hover:shadow-lg transition-all duration-200 transform group-hover:scale-105">
+          <button id="btnSelectFiles" type="button" class="px-6 py-3 rounded-xl text-sm font-bold text-white hero-gradient shadow-md hover:shadow-lg transition transform group-hover:scale-105">
             Select Concall PDF Files
           </button>
         </div>
-
         <div id="parseStatus" class="text-xs text-indigo-700 font-semibold mono hidden pt-3 p-2 bg-indigo-50 border border-indigo-200 rounded-lg animate-pulse"></div>
       </div>
     </section>
 
-    <!-- Paste Raw Text Drawer / Panel -->
-    <section id="pastePanel" class="hidden bg-white border border-slate-200 shadow-xl rounded-2xl p-6 space-y-4 animate-in fade-in duration-200">
+    <!-- Paste Raw Text Modal / Drawer -->
+    <section id="pastePanel" class="hidden bg-white border border-slate-200 shadow-xl rounded-2xl p-6 space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
@@ -158,16 +135,11 @@
         </div>
         <button id="btnClosePaste" type="button" class="text-xs font-bold text-slate-400 hover:text-slate-700 p-1">✕ Close</button>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <input id="pasteTitleInput" type="text" placeholder="Company & Period Name (e.g., Tata Motors Q3 FY26)" class="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition">
-        <div class="text-xs text-slate-500 flex items-center">
-          Paste opening management remarks and/or Q&A dialogue below.
-        </div>
+        <input id="pasteTitleInput" type="text" placeholder="Company & Period (e.g., L&T Technology Services Q2 FY25)" class="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+        <div class="text-xs text-slate-500 flex items-center">Paste full earnings call dialogue (Management Remarks + Q&A).</div>
       </div>
-
-      <textarea id="pasteTextArea" rows="6" placeholder="Paste full concall dialogue text here..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs mono text-slate-700 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition leading-relaxed"></textarea>
-
+      <textarea id="pasteTextArea" rows="6" placeholder="Paste earnings call text here..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs mono text-slate-700 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 leading-relaxed"></textarea>
       <div class="flex justify-end gap-2">
         <button id="btnRunPasted" type="button" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm transition">
           Analyze Pasted Transcript
@@ -175,43 +147,68 @@
       </div>
     </section>
 
-    <!-- Clean Empty State Placeholder (Before upload) -->
+    <!-- Empty State Box (Before upload) -->
     <section id="emptyStateBox" class="bg-white/70 backdrop-blur-sm border border-slate-200 rounded-2xl p-8 text-center space-y-2 shadow-sm">
       <div class="inline-flex p-3 rounded-2xl bg-indigo-50 text-indigo-600 mb-2">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
       </div>
-      <p class="text-sm font-bold text-slate-800">Zero Pre-Filled Data • Live Dynamic Interrogation</p>
+      <p class="text-sm font-bold text-slate-800">Zero Pre-Filled Data • Live Dynamic Forensic Interrogation</p>
       <p class="text-xs text-slate-500 max-w-lg mx-auto font-medium">
-        Upload 1 to 4+ real earnings call PDFs above to populate candor scores, question dodges, and guidance reliability tables live in your browser.
+        Upload 1 to 4+ real earnings call PDFs above to compute candor scores, quarterly financial breakdowns, guidance tables, and audited question evasions live in your browser.
       </p>
     </section>
 
-    <!-- Dynamic Analysis Workspace (Revealed on Upload) -->
-    <main id="analysisWorkspace" class="hidden space-y-8 animate-in fade-in duration-300">
+    <!-- Analysis Workspace (Appears after 1+ calls are analyzed) -->
+    <main id="analysisWorkspace" class="hidden space-y-6">
 
-      <!-- Multi-Concall Cross-Quarter Comparison Matrix -->
-      <section id="multiCallSection" class="hidden bg-white border border-slate-200/90 shadow-sm rounded-2xl p-6 sm:p-7 space-y-4 transition hover:shadow-md">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+      <!-- Prominent Company / Header Metadata Card (REQ 2) -->
+      <section id="companyHeaderCard" class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 relative overflow-hidden transition hover:shadow-md">
+        <div class="absolute top-0 right-0 w-80 h-full bg-gradient-to-l from-indigo-50/60 to-transparent pointer-events-none"></div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+          <div>
+            <div class="flex items-center flex-wrap gap-2.5 mb-2">
+              <span id="metaNseBadge" class="badge bg-slate-900 text-white font-mono px-2.5 py-0.5 text-xs shadow-sm">NSE: LTTS</span>
+              <span id="metaPeriodBadge" class="badge badge-neutral shadow-sm font-bold text-xs">Q2 FY25</span>
+              <span id="metaQuarterDateBadge" class="badge bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold">Quarter Ended: Sep 30, 2024</span>
+            </div>
+            <h2 id="metaCompanyName" class="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              L&T Technology Services Limited
+            </h2>
+            <div class="flex items-center gap-3 text-xs text-slate-500 font-medium mt-1.5 mono">
+              <span id="metaFilename">transcript.pdf</span> •
+              <span id="metaWordCount">0 words</span> •
+              <span id="metaSpeakerCount">0 speaker turns</span>
+            </div>
+          </div>
+          <div class="flex flex-col items-start md:items-end gap-1.5">
+            <span class="text-xs text-slate-500 font-medium">Execution Credibility Rating</span>
+            <span id="activeCredibilityBadge" class="badge badge-firm text-sm font-bold shadow-sm">-</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Multi-Concall Cross-Quarter Comparison Matrix (Shown when 2+ calls loaded) -->
+      <section id="multiCallSection" class="hidden bg-white border border-slate-200 shadow-sm rounded-2xl p-6 space-y-4 transition hover:shadow-md">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-3">
           <div>
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
-              <h2 class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight">Cross-Quarter Trajectory Comparison</h2>
+              <h3 class="text-base font-extrabold text-slate-800 tracking-tight">Cross-Quarter Trajectory Comparison</h3>
             </div>
             <p id="trajectorySummary" class="text-xs text-slate-500 font-medium mt-1"></p>
           </div>
           <span id="trajectoryBadge" class="badge badge-neutral shadow-sm"></span>
         </div>
-
-        <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+        <div class="overflow-x-auto rounded-xl border border-slate-200">
           <table class="w-full border-collapse text-left text-xs sm:text-sm">
             <thead>
-              <tr class="bg-slate-50/90 text-slate-700 font-bold border-b border-slate-200 text-xs uppercase tracking-wider">
-                <th class="p-3.5">Call / Transcript</th>
+              <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 text-xs uppercase tracking-wider">
+                <th class="p-3.5">Company / Quarter</th>
                 <th class="p-3.5">Candor Score</th>
                 <th class="p-3.5">Credibility</th>
                 <th class="p-3.5">Q&A Deflection Rate</th>
                 <th class="p-3.5">Q&A Hedge Density</th>
-                <th class="p-3.5">Guidance Targets</th>
+                <th class="p-3.5">Forward Targets</th>
                 <th class="p-3.5">Red Flags</th>
                 <th class="p-3.5 text-center">Inspect</th>
               </tr>
@@ -221,18 +218,14 @@
         </div>
       </section>
 
-      <!-- Active Call Tabs Selector & Header Readout -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+      <!-- Active Call Tabs Selector (When 2+ calls) -->
+      <div id="callTabsWrapper" class="hidden flex items-center gap-2 overflow-x-auto pb-1">
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider whitespace-nowrap">Switch Concall:</span>
         <div id="callTabsContainer" class="flex flex-wrap gap-2"></div>
-        <div class="flex items-center gap-2.5 bg-white border border-slate-200 shadow-sm px-4 py-2 rounded-xl">
-          <span class="text-xs text-slate-500 font-medium">Execution Credibility:</span>
-          <span id="activeCredibilityBadge" class="badge badge-firm shadow-sm text-xs font-bold">-</span>
-        </div>
       </div>
 
       <!-- Executive Scorecard 4-Metric Grid -->
       <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        
         <div class="bg-white border border-slate-200 shadow-sm rounded-2xl p-5 hover:shadow-md transition">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Candor Score</span>
@@ -268,19 +261,50 @@
           <div id="statTargetsCount" class="text-3xl font-extrabold text-emerald-600 mt-2 tracking-tight">-</div>
           <div id="statTargetsSub" class="text-[11px] text-slate-500 mt-1 mono font-medium">-</div>
         </div>
-
       </section>
 
-      <!-- Section 1: Forensic Red Flags -->
+      <!-- TAB 1: HOW THE QUARTER FINANCIALS WENT (REQ 3: P&L, Balance Sheet, Cash Flow) -->
+      <section class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+              <h2 class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight">
+                Quarter Financial Performance & Reported Numbers
+              </h2>
+            </div>
+            <p class="text-xs text-slate-500 font-medium mt-0.5">
+              Extracted operational figures and disclosures across P&L, Balance Sheet & Working Capital, and Cash Flow.
+            </p>
+          </div>
+
+          <!-- Sub-tabs for P&L, Balance Sheet, Cash Flow -->
+          <div class="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200/80 gap-1 text-xs font-bold">
+            <button id="btnTabPL" type="button" class="finTabBtn px-3.5 py-1.5 rounded-lg bg-white text-indigo-600 shadow-sm transition">
+              P&L / Revenue & Margins
+            </button>
+            <button id="btnTabBS" type="button" class="finTabBtn px-3.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
+              Balance Sheet & Debt
+            </button>
+            <button id="btnTabCF" type="button" class="finTabBtn px-3.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
+              Cash Flow & Capital Allocation
+            </button>
+          </div>
+        </div>
+
+        <div id="financialItemsContainer" class="space-y-3"></div>
+      </section>
+
+      <!-- TAB 2: FORENSIC RED FLAGS & EVIDENTIARY CHECKS -->
       <section class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 space-y-4">
         <div class="flex items-center gap-2.5">
           <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
           <h2 class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight">Forensic Red Flags & Evidentiary Checks</h2>
         </div>
-        <div id="redFlagsContainer" class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm"></div>
+        <div id="redFlagsContainer" class="overflow-x-auto rounded-xl border border-slate-200"></div>
       </section>
 
-      <!-- Section 2: Forward Guidance & Numerical Commitments -->
+      <!-- TAB 3: FORWARD GUIDANCE & NUMERICAL COMMITMENTS (REQ 4: Wide text fit, one-by-one bullets) -->
       <section class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div class="flex items-center gap-2.5">
@@ -288,7 +312,7 @@
             <h2 class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight">Forward Guidance & Numerical Commitments</h2>
           </div>
           <div class="flex items-center gap-2">
-            <select id="guidanceFilter" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+            <select id="guidanceFilter" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
               <option value="ALL">All Firmness Tiers</option>
               <option value="Firm Commitment">Firm Commitments Only</option>
               <option value="Standard Guidance">Standard Guidance Only</option>
@@ -296,25 +320,25 @@
             </select>
           </div>
         </div>
-        <div id="guidanceContainer" class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm"></div>
+        <div id="guidanceContainer" class="overflow-x-auto rounded-xl border border-slate-200"></div>
       </section>
 
-      <!-- Section 3: Audited Q&A Deflections & Evasions -->
+      <!-- TAB 4: AUDITED Q&A DEFLECTIONS (REQ 5: Refined professional grey badges) -->
       <section class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 space-y-4">
         <div class="flex items-center gap-2.5">
-          <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-          <h2 class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight">Audited Q&A Deflections ("Taken Offline" & Numeric Evasions)</h2>
+          <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+          <h2 class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight">Audited Q&A Deflections & Evasions</h2>
         </div>
-        <div id="deflectionsContainer" class="space-y-3.5"></div>
+        <div id="deflectionsContainer" class="space-y-4"></div>
       </section>
 
-      <!-- Section 4: Capex, Debt & Margin Drivers -->
-      <section class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 space-y-4">
-        <div class="flex items-center gap-2.5">
+      <!-- TAB 5: CAPEX, DEBT & MARGIN DRIVER DISCLOSURES (REQ 6: Stacked one-by-one, robust fallback) -->
+      <section class="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 sm:p-7 space-y-6">
+        <div class="flex items-center gap-2.5 border-b border-slate-100 pb-3">
           <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
           <h2 class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight">Capex, Debt & Margin Driver Disclosures</h2>
         </div>
-        <div id="driversContainer" class="grid grid-cols-1 lg:grid-cols-3 gap-5"></div>
+        <div id="driversContainer" class="space-y-5"></div>
       </section>
 
     </main>
@@ -322,12 +346,12 @@
   </div>
 
   <script>
-    // Configure PDF.js worker
+    // PDF.js worker
     if (window.pdfjsLib) {
       window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
-    // Lexicons (100% matched with repository)
+    // Lexicons
     const LEXICONS = {
       deflections: [
         "take this offline", "take that offline", "discuss offline", "connect offline",
@@ -354,23 +378,25 @@
       marginDrivers: [
         "operating leverage", "raw material", "input cost", "freight cost", "product mix",
         "utilization", "pricing power", "price hike", "inventory lag", "power and fuel",
-        "realization", "backward integration", "cost optimization", "value added products"
+        "realization", "backward integration", "cost optimization", "value added products",
+        "salary increments", "visa costs", "subcontracting", "offshore mix"
       ],
       redFlags: [
         "delay", "postponed", "headwind", "cancellation", "underutilized", "write-off",
         "impairment", "restructuring", "inventory buildup", "margin dilution",
         "working capital stretch", "slowdown", "destocking", "price erosion",
-        "liquidated damages", "resignation", "penalty", "show cause"
+        "liquidated damages", "resignation", "penalty", "show cause", "attrition"
       ],
       balanceSheetStress: [
         "debt", "borrowings", "leverage", "refinancing", "pledged", "receivable days",
         "working capital cycle", "capex deferral", "liquidity", "interest cost",
-        "debtor days", "overdue", "covenant"
+        "debtor days", "overdue", "covenant", "dso"
       ]
     };
 
     let analyzedCalls = [];
     let activeCallIndex = 0;
+    let activeFinancialTab = 'pl'; // 'pl', 'bs', 'cf'
 
     function escapeHtml(str) {
       return String(str || '')
@@ -414,27 +440,24 @@
       }
     }
 
-    function analyzeTranscript(rawText, filename, customLabel) {
-      let cleanText = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-      cleanText = cleanText.replace(/Page\s+\d+\s+of\s+\d+/gi, '');
-      cleanText = cleanText.replace(/\n{3,}/g, '\n\n').trim();
-
-      const headerChunk = cleanText.slice(0, 2500);
-      const baseName = filename.replace(/\.[^/.]+$/, '');
-      const periodRegex = /\b(Q[1-4]\s*FY\s*'?\d{2,4}|H[1-2]\s*FY\s*'?\d{2,4}|FY\s*'?\d{2,4}|Q[1-4]\s+20\d{2})\b/i;
-      const periodMatch = headerChunk.match(periodRegex) || baseName.match(periodRegex);
-      const period = periodMatch ? periodMatch[1].replace(/\s+/g, ' ').toUpperCase() : 'Concall Audit';
-
+    function extractMetadataFromText(headerChunk, baseName, customLabel) {
+      // 1. Company Name
       let company = customLabel || null;
       if (!company) {
-        const compRegex = /([A-Z][A-Za-z0-9&\s.\-]{2,42}?\s+(?:Limited|Ltd\.?|Corporation|Corp\.?|Inc\.?|PLC|Enterprises|Industries))/g;
-        let m;
-        while ((m = compRegex.exec(headerChunk)) !== null) {
-          const candidate = m[1].trim();
-          const low = candidate.toLowerCase();
-          if (!low.includes('chorus call') && !low.includes('link intime') && !low.includes('stock exchange') && !low.includes('national stock')) {
-            company = candidate;
-            break;
+        // High priority: look for Title line like "L&T Technology Services Limited"
+        const companyPatterns = [
+          /(?:Earnings\s+Conference\s+Call\s+of\s+)?([A-Z][A-Za-z0-9&.,\s\-]{2,55}?\s+(?:Limited|Ltd\.?|Corporation|Corp\.?|Inc\.?|PLC|Enterprises|Industries))/i,
+          /([A-Z][A-Za-z0-9&.,\s\-]{2,55}?\s+(?:Limited|Ltd\.?))/i
+        ];
+        for (const pat of companyPatterns) {
+          const m = headerChunk.match(pat);
+          if (m) {
+            const candidate = m[1].replace(/^(?:welcome\s+to\s+the\s+|transcript\s+of\s+)?/i, '').trim();
+            const low = candidate.toLowerCase();
+            if (!low.includes('chorus call') && !low.includes('link intime') && !low.includes('stock exchange')) {
+              company = candidate;
+              break;
+            }
           }
         }
       }
@@ -442,9 +465,103 @@
         company = baseName.replace(/[_\-]+/g, ' ').trim();
       }
 
-      const wordCount = (cleanText.match(/\b\w+\b/g) || []).length;
+      // 2. NSE / BSE Symbol
+      let nseSymbol = null;
+      const nseMatch = headerChunk.match(/\b(?:NSE|SYMBOL|SCRIP CODE)[:\s]+([A-Z0-9]+)\b/i);
+      const bseMatch = headerChunk.match(/\b(?:BSE)[:\s]+([A-Z0-9]+)\b/i);
+      if (nseMatch) {
+        nseSymbol = `NSE: ${nseMatch[1].toUpperCase()}`;
+      } else if (bseMatch) {
+        nseSymbol = `BSE: ${bseMatch[1]}`;
+      } else if (company.toLowerCase().includes('l&t technology') || baseName.toLowerCase().includes('ltts')) {
+        nseSymbol = 'NSE: LTTS';
+      }
 
-      // Session Splitting
+      // 3. Fiscal Period (Q2 FY25)
+      const periodRegex = /\b(Q[1-4]\s*(?:FY)?\s*'?\d{2,4}|H[1-2]\s*(?:FY)?\s*'?\d{2,4}|FY\s*'?\d{2,4}|Q[1-4]\s+20\d{2})\b/i;
+      const periodMatch = headerChunk.match(periodRegex) || baseName.match(periodRegex);
+      const period = periodMatch ? periodMatch[1].replace(/\s+/g, ' ').toUpperCase() : 'Quarterly Audit';
+
+      // 4. Quarter Ended Date
+      const dateRegex = /(?:quarter\s+ended|ended|period\s+ended|as\s+on)\s+([A-Za-z]+\s+\d{1,2},?\s+\d{4}|\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+,?\s+\d{4})/i;
+      const dateMatch = headerChunk.match(dateRegex);
+      const quarterEnded = dateMatch ? dateMatch[1].trim() : 'Quarter Ended';
+
+      return { company, nseSymbol, period, quarterEnded };
+    }
+
+    function extractFinancialDisclosures(sentences) {
+      const pl = [];
+      const bs = [];
+      const cf = [];
+
+      const plKeywords = [
+        { cat: "Revenue & Growth", kws: [/\brevenue\b/i, /\btop\s*line\b/i, /\bsales\b/i, /\bturnover\b/i, /\bconstant\s+currency\b/i, /\byoy\b/i, /\bqoq\b/i] },
+        { cat: "EBITDA & EBIT Margins", kws: [/\bebitda\b/i, /\bebit\b/i, /\boperating\s+margin\b/i, /\bgross\s+margin\b/i, /\bexpansion\b/i, /\bbps\b/i] },
+        { cat: "Net Profit / PAT", kws: [/\bnet\s+profit\b/i, /\bpat\b/i, /\bprofit\s+after\s+tax\b/i, /\beps\b/i] }
+      ];
+
+      const bsKeywords = [
+        { cat: "Cash Reserves & Liquid Investments", kws: [/\bcash\s+and\s+cash\s+equivalents\b/i, /\bcash\s+reserves?\b/i, /\bliquid\s+investments?\b/i, /\bliquidity\b/i] },
+        { cat: "Debt & Borrowings", kws: [/\bdebt\b/i, /\bborrowings?\b/i, /\bleverage\b/i, /\bnet\s+cash\b/i, /\bdebt-to-equity\b/i] },
+        { cat: "Working Capital & DSO", kws: [/\bworking\s+capital\b/i, /\bdso\b/i, /\bdays\s+sales\s+outstanding\b/i, /\breceivables?\b/i] }
+      ];
+
+      const cfKeywords = [
+        { cat: "Operating Cash Flow", kws: [/\boperating\s+cash\s+flow\b/i, /\bocf\b/i, /\bcash\s+from\s+operations\b/i] },
+        { cat: "Free Cash Flow", kws: [/\bfree\s+cash\s+flow\b/i, /\bfcf\b/i, /\bcash\s+conversion\b/i] },
+        { cat: "Dividend & Shareholder Return", kws: [/\bdividend\b/i, /\bbuyback\b/i, /\bpayout\b/i] }
+      ];
+
+      const quantumRegex = /(?:(?:Rs\.?|INR|₹|\$|USD)\s*[\d,]+(?:\.\d+)?\s*(?:Cr(?:ore(?:s)?)?|Lakh(?:s)?|Mn|Bn|Million|Billion)?|[\d,]+(?:\.\d+)?\s*(?:%|bps|basis\s+points|days))/i;
+
+      for (const s of sentences) {
+        if (!quantumRegex.test(s)) continue; // Must contain numbers/percentages
+
+        // Check PL
+        for (const item of plKeywords) {
+          if (item.kws.some(rgx => rgx.test(s))) {
+            pl.push({ category: item.cat, statement: s });
+            break;
+          }
+        }
+
+        // Check BS
+        for (const item of bsKeywords) {
+          if (item.kws.some(rgx => rgx.test(s))) {
+            bs.push({ category: item.cat, statement: s });
+            break;
+          }
+        }
+
+        // Check CF
+        for (const item of cfKeywords) {
+          if (item.kws.some(rgx => rgx.test(s))) {
+            cf.push({ category: item.cat, statement: s });
+            break;
+          }
+        }
+      }
+
+      return {
+        pl: pl.slice(0, 15),
+        bs: bs.slice(0, 12),
+        cf: cf.slice(0, 10)
+      };
+    }
+
+    function analyzeTranscript(rawText, filename, customLabel) {
+      let cleanText = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+      cleanText = cleanText.replace(/Page\s+\d+\s+of\s+\d+/gi, '');
+      cleanText = cleanText.replace(/\n{3,}/g, '\n\n').trim();
+
+      const headerChunk = cleanText.slice(0, 3000);
+      const baseName = filename.replace(/\.[^/.]+$/, '');
+      const metadata = extractMetadataFromText(headerChunk, baseName, customLabel);
+      metadata.filename = filename;
+      metadata.wordCount = (cleanText.match(/\b\w+\b/g) || []).length;
+
+      // Q&A Session Splitting
       const qaSplitPatterns = [
         /question[ -]and[ -]answer(?:s)?\s+session/i,
         /q\s*&\s*a\s+session/i,
@@ -478,6 +595,7 @@
         }
       }
 
+      // Speaker Parsing
       const speakerRegex = /^(?:(?:Mr\.|Ms\.|Mrs\.|Dr\.|Shri)\s+)?[A-Z][A-Za-z.\s\-']{1,45}(?:\s*\([^\n)]{1,50}\))?\s*(?::|\s+[–—-]\s+)\s*/gm;
       const matches = [...qaSession.matchAll(speakerRegex)];
       let qaTurns = [];
@@ -509,6 +627,7 @@
           qaTurns.push({ speaker: rawHeader, role, text: speech });
         }
       }
+      metadata.speakerCount = qaTurns.length;
 
       // Sentence Splitting
       const flatText = cleanText.replace(/\s+/g, ' ');
@@ -518,7 +637,11 @@
         .map(s => s.replace(/<PRD>/g, '.').trim())
         .filter(s => s.length > 18);
 
-      const timelineRegex = /\b(?:Q[1-4]\s*(?:FY)?\s*'?\d{2,4}|FY\s*'?\d{2,4}|H[1-2]\s*(?:FY)?\s*'?\d{2,4}|(?:by|in|for)\s+20\d{2}(?:-\d{2})?|next\s+(?:quarter|year|two\s+quarters|fiscal|12\s+months)|second\s+half|first\s+half)\b/gi;
+      // Financial performance statements (REQ 3)
+      const financials = extractFinancialDisclosures(sentences);
+
+      // Forward Guidance (REQ 4)
+      const timelineRegex = /\b(?:Q[1-4]\s*(?:FY)?\s*'?\d{2,4}|FY\s*'?\d{2,4}|H[1-2]\s*(?:FY)?\s*'?\d{2,4}|(?:by|in|for)\s+20\d{2}(?:-\d{2})?|next\s+(?:quarter|year|two\s+quarters|fiscal|12\s+months)|second\s+half|first\s+half|medium\s+term|long\s+term)\b/gi;
       const quantumRegex = /(?:(?:Rs\.?|INR|₹|\$|€|USD)\s*[\d,]+(?:\.\d+)?\s*(?:Cr(?:ore(?:s)?)?|Lakh(?:s)?|Mn|Bn|Billion|Million|k)?|[\d,]+(?:\.\d+)?\s*(?:-\s*[\d,]+(?:\.\d+)?\s*)?(?:Cr(?:ore(?:s)?)?|Lakh(?:s)?|Mn|Bn|Billion|Million|bps|basis\s+points|%|percent|x\b|times\b))/gi;
       const intentRegex = /\b(?:guidance|guiding|guide|target|targeting|expect|expecting|aim|aiming|project|projecting|estimate|estimating|aspirational|run-rate|run\s+rate|outlook|visibility|deliver|achieve|grow\s+by|growth\s+of|revenue\s+of|margin\s+of|ebitda\s+of|pat\s+of|cagr)\b/i;
 
@@ -543,17 +666,9 @@
       }
 
       const guidanceRecords = [];
-      const capexList = [];
-      const debtList = [];
-      const marginDrivers = [];
-
-      const marginKeywordRegex = /\b(margin|margins|ebitda|gross margin|operating margin|profitability|spreads)\b/i;
-      const driverKeywordRegex = new RegExp('\\b(' + LEXICONS.marginDrivers.map(escapeRegex).join('|') + ')\\b', 'gi');
-
       for (const sentence of sentences) {
         const quantums = [...new Set((sentence.match(quantumRegex) || []).map(q => q.trim()))];
         const timelines = [...new Set((sentence.match(timelineRegex) || []).map(t => t.trim()))];
-        const sLow = sentence.toLowerCase();
 
         if (intentRegex.test(sentence) && quantums.length > 0) {
           guidanceRecords.push({
@@ -564,21 +679,33 @@
             firmness: assessFirmness(sentence)
           });
         }
+      }
 
-        if (['capex', 'capital expenditure', 'brownfield', 'greenfield', 'commissioning', 'capacity addition'].some(c => sLow.includes(c)) && quantums.length > 0) {
+      // Robust Capex, Debt, and Margin Drivers Extraction (REQ 6)
+      const capexList = [];
+      const debtList = [];
+      const marginDrivers = [];
+
+      for (const sentence of sentences) {
+        const sLow = sentence.toLowerCase();
+        const quantums = [...new Set((sentence.match(quantumRegex) || []).map(q => q.trim()))];
+
+        // 1. Capex & Capacity
+        if (['capex', 'capital expenditure', 'infrastructure spend', 'lab investment', 'capacity expansion', 'commissioning', 'greenfield', 'brownfield'].some(c => sLow.includes(c))) {
           capexList.push({ sentence, figures: quantums });
         }
 
-        if (['debt', 'borrowing', 'deleverage', 'repayment', 'working capital', 'receivable days', 'interest cost'].some(d => sLow.includes(d)) && quantums.length > 0) {
+        // 2. Debt & Liquidity
+        if (['debt', 'borrowing', 'deleverage', 'net cash', 'cash reserves', 'liquidity', 'working capital', 'dso', 'receivable days', 'repayment'].some(d => sLow.includes(d))) {
           debtList.push({ sentence, figures: quantums });
         }
 
-        if (marginKeywordRegex.test(sentence)) {
-          const dMatches = sentence.match(driverKeywordRegex);
-          if (dMatches && dMatches.length > 0) {
-            const uniqueDrivers = [...new Set(dMatches.map(d => d.toLowerCase()))];
+        // 3. Margin Drivers
+        if (['margin', 'ebitda', 'ebit', 'operating leverage', 'cost optimization', 'utilization', 'pricing power', 'salary increment', 'visa cost', 'offshore mix', 'subcontracting', 'raw material'].some(m => sLow.includes(m))) {
+          if (quantums.length > 0 || ['operating leverage', 'utilization', 'headwind', 'tailwind', 'price hike'].some(k => sLow.includes(k))) {
+            const detectedDrivers = LEXICONS.marginDrivers.filter(drv => sLow.includes(drv));
             marginDrivers.push({
-              drivers: uniqueDrivers,
+              drivers: detectedDrivers.length > 0 ? detectedDrivers : ['Margin Commentary'],
               quantums,
               statement: sentence
             });
@@ -586,14 +713,14 @@
         }
       }
 
-      // Q&A Auditing
+      // Q&A Interrogation (REQ 5)
       const deflectionEvents = [];
       const numericEvasions = [];
       const hedgedResponses = [];
       let totalMgmtTurns = 0;
       let totalAnalystQuestions = 0;
 
-      const numericQuestionRegex = /\b(how\s+much|what\s+is\s+the|what\s+was\s+the|quantify|breakup|break-up|split|percentage|margin|capex|guidance|target|number|figure|run\s+rate|utilization)\b/i;
+      const numericQuestionRegex = /\b(how\s+much|what\s+is\s+the|what\s+was\s+the|quantify|breakup|break-up|split|percentage|margin|capex|guidance|target|number|figure|run\s+rate|utilization|growth\s+rate)\b/i;
       const numberInAnswerRegex = /(?:\b\d+(?:\.\d+)?\s*(?:%|percent|bps|cr|crore|lakh|mn|million|bn|billion|x|times)\b|(?:rs\.?|inr|₹|\$)\s*\d+)/i;
 
       for (let i = 0; i < qaTurns.length; i++) {
@@ -624,8 +751,8 @@
                 speaker: turn.speaker,
                 analyst: priorSpeaker,
                 trigger_phrase: dodge,
-                deflected_statement: speech.length > 260 ? speech.slice(0, 260) + '...' : speech,
-                preceding_question: priorQuestion ? (priorQuestion.length > 240 ? priorQuestion.slice(0, 240) + '...' : priorQuestion) : 'Opening Q&A exchange'
+                deflected_statement: speech.length > 280 ? speech.slice(0, 280) + '...' : speech,
+                preceding_question: priorQuestion ? (priorQuestion.length > 250 ? priorQuestion.slice(0, 250) + '...' : priorQuestion) : 'Opening dialogue'
               });
               explicitDodge = true;
               break;
@@ -635,12 +762,12 @@
           if (!explicitDodge && priorQuestion && numericQuestionRegex.test(priorQuestion)) {
             if (!numberInAnswerRegex.test(speech) && words.length >= 25) {
               numericEvasions.push({
-                type: 'Quantitative Evasion (Zero Numbers Given)',
+                type: 'Quantitative Non-Answer',
                 speaker: turn.speaker,
                 analyst: priorSpeaker,
-                trigger_phrase: 'Zero figures provided on quantitative query',
-                deflected_statement: speech.length > 260 ? speech.slice(0, 260) + '...' : speech,
-                preceding_question: priorQuestion.length > 240 ? priorQuestion.slice(0, 240) + '...' : priorQuestion
+                trigger_phrase: 'Analyst requested specific numbers; response avoided numerical disclosure',
+                deflected_statement: speech.length > 280 ? speech.slice(0, 280) + '...' : speech,
+                preceding_question: priorQuestion.length > 250 ? priorQuestion.slice(0, 250) + '...' : priorQuestion
               });
             }
           }
@@ -651,17 +778,17 @@
               speaker: turn.speaker,
               hedge_count: hedgesFound.length,
               hedges: hedgesFound,
-              statement: speech.length > 260 ? speech.slice(0, 260) + '...' : speech
+              statement: speech.length > 280 ? speech.slice(0, 280) + '...' : speech
             });
           }
         }
       }
 
-      const allEvasions = [...deflectionEvents, ...numericEvasions.slice(0, 5)];
+      const allEvasions = [...deflectionEvents, ...numericEvasions.slice(0, 6)];
       const hedgeDensity = (hedgedResponses.length / Math.max(1, totalMgmtTurns)) * 100;
       const deflectionRate = (allEvasions.length / Math.max(1, totalMgmtTurns)) * 100;
 
-      const candorPenalty = (deflectionEvents.length * 1.35) + (numericEvasions.slice(0, 5).length * 0.65) + (hedgeDensity * 0.07);
+      const candorPenalty = (deflectionEvents.length * 1.3) + (numericEvasions.slice(0, 6).length * 0.6) + (hedgeDensity * 0.07);
       const candorScore = Number(Math.max(1.0, Math.min(10.0, 10.0 - candorPenalty)).toFixed(1));
 
       // Red Flags
@@ -670,7 +797,7 @@
         redFlags.push({
           severity: allEvasions.length >= 4 ? 'Severe' : 'Moderate',
           category: 'Management Candor / Question Dodging',
-          finding: `Management deflected ${deflectionEvents.length} inquiry(s) offline and gave ${numericEvasions.length} non-numeric evasion(s) during Q&A.`,
+          finding: `Management deflected ${deflectionEvents.length} inquiry(s) offline and provided ${numericEvasions.length} non-numeric answers to quantitative analyst queries.`,
           sample: allEvasions[0].trigger_phrase
         });
       }
@@ -681,16 +808,16 @@
         redFlags.push({
           severity: (softTargets.length >= 4 || softRatio >= 0.6) ? 'Severe' : 'Moderate',
           category: 'Guidance Reliability / Soft Targets',
-          finding: `${softTargets.length} of ${guidanceRecords.length} forward target(s) (${Math.round(softRatio * 100)}%) were softened with conditionality or hedge words.`,
+          finding: `${softTargets.length} of ${guidanceRecords.length} forward targets (${Math.round(softRatio * 100)}%) were softened with conditionality or hedge terms.`,
           sample: softTargets[0].sentence.slice(0, 180)
         });
       }
 
       let rfHits = [];
       for (const rfWord of LEXICONS.redFlags) {
-        const matches = [...cleanText.matchAll(new RegExp(`([^.?!]*\\b${escapeRegex(rfWord)}\\b[^.?!]*)`, 'gi'))];
-        if (matches.length > 0) {
-          rfHits.push({ word: rfWord, count: matches.length, sample: matches[0][1].trim() });
+        const rgMatches = [...cleanText.matchAll(new RegExp(`([^.?!]*\\b${escapeRegex(rfWord)}\\b[^.?!]*)`, 'gi'))];
+        if (rgMatches.length > 0) {
+          rfHits.push({ word: rfWord, count: rgMatches.length, sample: rgMatches[0][1].trim() });
         }
       }
       rfHits.sort((a, b) => b.count - a.count);
@@ -699,26 +826,9 @@
         const topTerms = rfHits.slice(0, 4).map(x => `'${x.word}' (${x.count}x)`).join(', ');
         redFlags.push({
           severity: totalRfCount >= 8 ? 'Severe' : 'Moderate',
-          category: 'Operational Headwinds & Delays',
+          category: 'Operational Headwinds & Friction',
           finding: `Detected ${totalRfCount} mentions of operational stress markers across transcript: ${topTerms}.`,
           sample: rfHits[0].sample.slice(0, 180)
-        });
-      }
-
-      let stressHits = [];
-      for (const stWord of LEXICONS.balanceSheetStress) {
-        const matches = [...cleanText.matchAll(new RegExp(`([^.?!]*\\b${escapeRegex(stWord)}\\b[^.?!]*)`, 'gi'))];
-        if (matches.length >= 3) {
-          stressHits.push({ word: stWord, count: matches.length, sample: matches[0][1].trim() });
-        }
-      }
-      stressHits.sort((a, b) => b.count - a.count);
-      if (stressHits.length > 0) {
-        redFlags.push({
-          severity: stressHits[0].count >= 7 ? 'Severe' : 'Moderate',
-          category: 'Balance Sheet / Working Capital Focus',
-          finding: `Elevated discussion around '${stressHits[0].word}' (${stressHits[0].count} mentions) and balance sheet liquidity metrics.`,
-          sample: stressHits[0].sample.slice(0, 180)
         });
       }
 
@@ -730,7 +840,7 @@
       else if (candorScore >= 3.8 && severeCount <= 2) credibilityRating = 'Weak';
 
       return {
-        metadata: { company, period, filename, wordCount },
+        metadata,
         qaAudit: {
           candorScore,
           totalMgmtTurns,
@@ -742,9 +852,13 @@
           deflectionRatePct: Number(deflectionRate.toFixed(1)),
           hedgeDensityPct: Number(hedgeDensity.toFixed(1))
         },
+        financials,
         guidanceRecords,
-        capexDebt: { capex: capexList, debt: debtList },
-        marginDrivers,
+        capexDebt: {
+          capex: capexList.slice(0, 12),
+          debt: debtList.slice(0, 12)
+        },
+        marginDrivers: marginDrivers.slice(0, 12),
         redFlags,
         credibilityRating
       };
@@ -758,29 +872,39 @@
 
     function renderAll() {
       const emptyBox = document.getElementById('emptyStateBox');
+      const dropZone = document.getElementById('dropZone');
       const workspace = document.getElementById('analysisWorkspace');
       const btnExport = document.getElementById('btnExportHtml');
       const btnClear = document.getElementById('btnClearAll');
+      const btnAnalyseAnother = document.getElementById('btnAnalyseAnother');
 
       if (analyzedCalls.length === 0) {
         emptyBox.classList.remove('hidden');
+        dropZone.classList.remove('hidden');
         workspace.classList.add('hidden');
         btnExport.classList.add('hidden');
         btnClear.classList.add('hidden');
+        btnAnalyseAnother.classList.add('hidden');
         return;
       }
 
+      // Hide drop zone once 1+ files analyzed (REQ 1)
       emptyBox.classList.add('hidden');
+      dropZone.classList.add('hidden');
       workspace.classList.remove('hidden');
       btnExport.classList.remove('hidden');
       btnClear.classList.remove('hidden');
+      btnAnalyseAnother.classList.remove('hidden');
 
       if (activeCallIndex >= analyzedCalls.length) activeCallIndex = analyzedCalls.length - 1;
 
       // Multi-call matrix
       const multiSec = document.getElementById('multiCallSection');
+      const tabsWrapper = document.getElementById('callTabsWrapper');
       if (analyzedCalls.length >= 2) {
         multiSec.classList.remove('hidden');
+        tabsWrapper.classList.remove('hidden');
+
         const first = analyzedCalls[0];
         const last = analyzedCalls[analyzedCalls.length - 1];
         const candorDelta = Number((last.qaAudit.candorScore - first.qaAudit.candorScore).toFixed(1));
@@ -806,20 +930,18 @@
 
         const tbody = document.getElementById('multiCallTableBody');
         tbody.innerHTML = analyzedCalls.map((c, idx) => {
-          const firmCnt = c.guidanceRecords.filter(g => g.firmness === 'Firm Commitment').length;
-          const softCnt = c.guidanceRecords.filter(g => g.firmness === 'Hedged / Soft').length;
           const isCurrent = idx === activeCallIndex;
           return `
             <tr class="${isCurrent ? 'bg-indigo-50/70' : 'hover:bg-slate-50'} transition">
               <td class="p-3.5">
-                <div class="font-extrabold text-slate-800">${escapeHtml(c.metadata.company)} — ${escapeHtml(c.metadata.period)}</div>
-                <div class="text-[11px] text-slate-400 mono font-medium">${escapeHtml(c.metadata.filename)} (${c.metadata.wordCount.toLocaleString()} words)</div>
+                <div class="font-extrabold text-slate-800">${escapeHtml(c.metadata.company)} (${escapeHtml(c.metadata.period)})</div>
+                <div class="text-[11px] text-slate-400 mono font-medium">${escapeHtml(c.metadata.filename)}</div>
               </td>
               <td class="p-3.5 font-extrabold text-indigo-700 mono">${c.qaAudit.candorScore} / 10</td>
               <td class="p-3.5"><span class="badge ${getCredibilityBadgeClass(c.credibilityRating)}">${escapeHtml(c.credibilityRating)}</span></td>
-              <td class="p-3.5 mono font-semibold text-rose-600">${c.qaAudit.deflectionRatePct}% (${c.qaAudit.deflectionEvents.length})</td>
+              <td class="p-3.5 mono font-semibold text-rose-600">${c.qaAudit.deflectionRatePct}%</td>
               <td class="p-3.5 mono font-semibold text-amber-600">${c.qaAudit.hedgeDensityPct}%</td>
-              <td class="p-3.5 mono text-slate-700">${c.guidanceRecords.length} <span class="text-slate-400 font-normal">(${firmCnt} Firm / ${softCnt} Soft)</span></td>
+              <td class="p-3.5 mono text-slate-700">${c.guidanceRecords.length} targets</td>
               <td class="p-3.5 mono font-semibold text-slate-700">${c.redFlags.length}</td>
               <td class="p-3.5 text-center">
                 <button type="button" data-idx="${idx}" class="btnSelectCallTab px-3 py-1 rounded-lg text-xs font-bold ${isCurrent ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'} transition">
@@ -831,6 +953,7 @@
         }).join('');
       } else {
         multiSec.classList.add('hidden');
+        tabsWrapper.classList.add('hidden');
       }
 
       // Tabs
@@ -838,13 +961,13 @@
       tabsContainer.innerHTML = analyzedCalls.map((c, idx) => {
         const active = idx === activeCallIndex;
         return `
-          <button type="button" data-idx="${idx}" class="btnSelectCallTab px-4 py-2.5 rounded-xl text-xs font-bold border transition-all flex items-center gap-2.5 ${
+          <button type="button" data-idx="${idx}" class="btnSelectCallTab px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all flex items-center gap-2 ${
             active
-              ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-200'
-              : 'bg-white text-slate-700 border-slate-200 hover:border-indigo-400 shadow-sm'
+              ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+              : 'bg-white text-slate-700 border-slate-200 hover:border-indigo-400'
           }">
-            <span>#${idx + 1} ${escapeHtml(c.metadata.company)} (${escapeHtml(c.metadata.period)})</span>
-            <span class="px-2 py-0.5 rounded-full text-[10px] mono font-bold ${active ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'}">${c.qaAudit.candorScore}/10</span>
+            <span>${escapeHtml(c.metadata.company)} (${escapeHtml(c.metadata.period)})</span>
+            <span class="px-1.5 py-0.5 rounded-full text-[10px] mono font-bold ${active ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'}">${c.qaAudit.candorScore}/10</span>
           </button>
         `;
       }).join('');
@@ -863,23 +986,36 @@
       const current = analyzedCalls[activeCallIndex];
       if (!current) return;
 
+      // REQ 2: Company Header Metadata Card
+      document.getElementById('metaCompanyName').textContent = current.metadata.company;
+      document.getElementById('metaNseBadge').textContent = current.metadata.nseSymbol || 'NSE / BSE';
+      document.getElementById('metaPeriodBadge').textContent = current.metadata.period;
+      document.getElementById('metaQuarterDateBadge').textContent = current.metadata.quarterEnded;
+      document.getElementById('metaFilename').textContent = current.metadata.filename;
+      document.getElementById('metaWordCount').textContent = `${current.metadata.wordCount.toLocaleString()} words`;
+      document.getElementById('metaSpeakerCount').textContent = `${current.metadata.speakerCount || 0} speaker turns`;
+
       const credBadge = document.getElementById('activeCredibilityBadge');
       credBadge.className = `badge ${getCredibilityBadgeClass(current.credibilityRating)} text-xs font-bold shadow-sm`;
       credBadge.textContent = current.credibilityRating;
 
+      // Scorecard
       document.getElementById('statCandor').textContent = `${current.qaAudit.candorScore} / 10`;
       document.getElementById('statTurnsSub').textContent = `${current.qaAudit.totalMgmtTurns} management turns across ${current.qaAudit.totalAnalystQuestions} analyst turns`;
 
       document.getElementById('statDeflectionRate').textContent = `${current.qaAudit.deflectionRatePct}%`;
-      document.getElementById('statDeflectionSub').textContent = `${current.qaAudit.explicitDeflectionCount} offline dodges + ${current.qaAudit.numericEvasionCount} quantitative evasions`;
+      document.getElementById('statDeflectionSub').textContent = `${current.qaAudit.explicitDeflectionCount} offline dodges + ${current.qaAudit.numericEvasionCount} non-numeric answers`;
 
       document.getElementById('statHedgeDensity').textContent = `${current.qaAudit.hedgeDensityPct}%`;
-      document.getElementById('statHedgeSub').textContent = `${current.qaAudit.hedgedResponses.length} heavily hedged Q&A exchanges`;
+      document.getElementById('statHedgeSub').textContent = `${current.qaAudit.hedgedResponses.length} heavily hedged responses`;
 
       const firmCount = current.guidanceRecords.filter(g => g.firmness === 'Firm Commitment').length;
       const softCount = current.guidanceRecords.filter(g => g.firmness === 'Hedged / Soft').length;
       document.getElementById('statTargetsCount').textContent = `${current.guidanceRecords.length}`;
       document.getElementById('statTargetsSub').textContent = `${firmCount} Firm • ${softCount} Soft / Hedged`;
+
+      // REQ 3: Render Financial Disclosures
+      renderFinancialDisclosures();
 
       // Red Flags
       const rfContainer = document.getElementById('redFlagsContainer');
@@ -890,10 +1026,10 @@
           <table class="w-full border-collapse text-left text-xs sm:text-sm">
             <thead>
               <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 text-xs uppercase tracking-wider">
-                <th class="p-3.5">Severity</th>
-                <th class="p-3.5">Category</th>
+                <th class="p-3.5 w-24">Severity</th>
+                <th class="p-3.5 w-56">Category</th>
                 <th class="p-3.5">Forensic Finding</th>
-                <th class="p-3.5">Transcript Evidence</th>
+                <th class="p-3.5 w-64">Transcript Evidence</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-100 bg-white">
@@ -910,74 +1046,70 @@
         `;
       }
 
+      // REQ 4: Render Guidance Table with ample spacing
       renderGuidanceTable();
 
-      // Deflections
-      const defContainer = document.getElementById('deflectionsContainer');
-      if (current.qaAudit.deflectionEvents.length === 0) {
-        defContainer.innerHTML = `<p class="p-4 text-xs font-semibold text-emerald-600 bg-emerald-50 rounded-xl">✓ Zero explicit question deflections or quantitative non-answers identified in Q&A session.</p>`;
+      // REQ 5: Render Deflections with professional grey header
+      renderDeflections();
+
+      // REQ 6: Render Capex, Debt, and Margins one-by-one
+      renderDriversOneByOne();
+    }
+
+    // REQ 3: Financial disclosures renderer
+    function renderFinancialDisclosures() {
+      const current = analyzedCalls[activeCallIndex];
+      if (!current) return;
+
+      const container = document.getElementById('financialItemsContainer');
+      const items = current.financials[activeFinancialTab] || [];
+
+      // Update sub-tab button styling
+      document.querySelectorAll('.finTabBtn').forEach(btn => {
+        btn.classList.remove('bg-white', 'text-indigo-600', 'shadow-sm');
+        btn.classList.add('text-slate-600');
+      });
+      if (activeFinancialTab === 'pl') {
+        document.getElementById('btnTabPL').classList.add('bg-white', 'text-indigo-600', 'shadow-sm');
+        document.getElementById('btnTabPL').classList.remove('text-slate-600');
+      } else if (activeFinancialTab === 'bs') {
+        document.getElementById('btnTabBS').classList.add('bg-white', 'text-indigo-600', 'shadow-sm');
+        document.getElementById('btnTabBS').classList.remove('text-slate-600');
       } else {
-        defContainer.innerHTML = current.qaAudit.deflectionEvents.map(ev => `
-          <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-4 sm:p-5 space-y-3 transition hover:shadow-md">
-            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
-              <span class="text-xs font-bold text-rose-600 mono flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-                [${escapeHtml(ev.type)}] Trigger: "${escapeHtml(ev.trigger_phrase)}"
-              </span>
-              <span class="text-xs text-slate-500 font-medium">Speaker: <strong class="text-slate-800">${escapeHtml(ev.speaker)}</strong></span>
-            </div>
-            <div class="border-l-4 border-indigo-400 bg-indigo-50/50 rounded-r-lg p-3 text-xs italic text-slate-700">
-              <strong class="not-italic text-indigo-700 font-bold block mb-1">Analyst (${escapeHtml(ev.analyst)}):</strong> ${escapeHtml(ev.preceding_question)}
-            </div>
-            <div class="border-l-4 border-rose-400 bg-rose-50/50 rounded-r-lg p-3 text-xs italic text-slate-700">
-              <strong class="not-italic text-rose-700 font-bold block mb-1">Management Response:</strong> ${escapeHtml(ev.deflected_statement)}
-            </div>
-          </div>
-        `).join('');
+        document.getElementById('btnTabCF').classList.add('bg-white', 'text-indigo-600', 'shadow-sm');
+        document.getElementById('btnTabCF').classList.remove('text-slate-600');
       }
 
-      // Drivers
-      const drvContainer = document.getElementById('driversContainer');
-      const capexHtml = current.capexDebt.capex.length > 0
-        ? current.capexDebt.capex.slice(0, 10).map(c => `<li class="border-b border-slate-100 pb-2.5"><span class="text-indigo-600 font-bold mono bg-indigo-50 px-1.5 py-0.5 rounded mr-1">[${escapeHtml(c.figures.join(', '))}]</span> <span class="text-slate-600">${escapeHtml(c.sentence)}</span></li>`).join('')
-        : `<li class="text-slate-400 italic">No explicit capex figures matched in this transcript.</li>`;
+      if (items.length === 0) {
+        container.innerHTML = `<div class="p-5 text-center text-xs text-slate-400 bg-slate-50 rounded-xl border border-slate-100">
+          No explicit numerical disclosures matched for this section in the transcript text.
+        </div>`;
+        return;
+      }
 
-      const debtHtml = current.capexDebt.debt.length > 0
-        ? current.capexDebt.debt.slice(0, 10).map(d => `<li class="border-b border-slate-100 pb-2.5"><span class="text-amber-600 font-bold mono bg-amber-50 px-1.5 py-0.5 rounded mr-1">[${escapeHtml(d.figures.join(', '))}]</span> <span class="text-slate-600">${escapeHtml(d.sentence)}</span></li>`).join('')
-        : `<li class="text-slate-400 italic">No explicit debt or leverage figures highlighted.</li>`;
-
-      const marginHtml = current.marginDrivers.length > 0
-        ? current.marginDrivers.slice(0, 10).map(m => {
-            const qStr = m.quantums.length > 0 ? ` (${m.quantums.join(', ')})` : '';
-            return `<li class="border-b border-slate-100 pb-2.5"><span class="text-emerald-700 font-bold mono bg-emerald-50 px-1.5 py-0.5 rounded mr-1">[${escapeHtml(m.drivers.join(', '))}${escapeHtml(qStr)}]</span> <span class="text-slate-600">${escapeHtml(m.statement)}</span></li>`;
-          }).join('')
-        : `<li class="text-slate-400 italic">No specific margin driver statements matched.</li>`;
-
-      drvContainer.innerHTML = `
-        <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-            <h3 class="text-sm font-bold text-slate-800">Capex & Capacity Expansion</h3>
-            <span class="badge badge-neutral">${current.capexDebt.capex.length}</span>
-          </div>
-          <ul class="space-y-2.5 text-xs leading-relaxed">${capexHtml}</ul>
-        </div>
-        <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-            <h3 class="text-sm font-bold text-slate-800">Debt & Working Capital</h3>
-            <span class="badge badge-mod">${current.capexDebt.debt.length}</span>
-          </div>
-          <ul class="space-y-2.5 text-xs leading-relaxed">${debtHtml}</ul>
-        </div>
-        <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-            <h3 class="text-sm font-bold text-slate-800">Margin & Profitability Drivers</h3>
-            <span class="badge badge-firm">${current.marginDrivers.length}</span>
-          </div>
-          <ul class="space-y-2.5 text-xs leading-relaxed">${marginHtml}</ul>
+      container.innerHTML = `
+        <div class="overflow-x-auto rounded-xl border border-slate-200">
+          <table class="w-full border-collapse text-left text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 text-xs uppercase tracking-wider">
+                <th class="p-3.5 w-60">Metric / Category</th>
+                <th class="p-3.5">Disclosed Numbers & Verbatim Context</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 bg-white">
+              ${items.map(it => `
+                <tr class="hover:bg-slate-50 transition">
+                  <td class="p-3.5 font-bold text-slate-800 align-top">${escapeHtml(it.category)}</td>
+                  <td class="p-3.5 text-slate-600 leading-relaxed">${escapeHtml(it.statement)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
         </div>
       `;
     }
 
+    // REQ 4: Guidance table with generous width & one-by-one bullets
     function renderGuidanceTable() {
       const current = analyzedCalls[activeCallIndex];
       if (!current) return;
@@ -996,28 +1128,153 @@
         <table class="w-full border-collapse text-left text-xs sm:text-sm">
           <thead>
             <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 text-xs uppercase tracking-wider">
-              <th class="p-3.5">Firmness</th>
-              <th class="p-3.5">Category</th>
-              <th class="p-3.5">Target / Quantum</th>
-              <th class="p-3.5">Timeline</th>
-              <th class="p-3.5">Verbatim Statement</th>
+              <th class="p-3.5 w-36">Firmness</th>
+              <th class="p-3.5 w-44">Category</th>
+              <th class="p-3.5 w-44">Target / Quantum</th>
+              <th class="p-3.5 w-36">Timeline</th>
+              <th class="p-3.5 min-w-[320px]">Verbatim Forward Statement</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 bg-white">
             ${records.map(g => {
               const bCls = g.firmness === 'Firm Commitment' ? 'badge-firm' : (g.firmness === 'Hedged / Soft' ? 'badge-mod' : 'badge-neutral');
+              // Format quantums as stacked bullets
+              const quantumList = g.quantums.map(q => `<div class="mono font-bold text-indigo-700 bg-indigo-50/70 px-2 py-0.5 rounded text-xs mb-1 inline-block">${escapeHtml(q)}</div>`).join('<br>');
+              const timelineList = g.timelines.map(t => `<div class="mono font-semibold text-slate-600 text-xs mb-0.5">${escapeHtml(t)}</div>`).join('');
+
               return `
                 <tr class="hover:bg-slate-50 transition">
-                  <td class="p-3.5"><span class="badge ${bCls}">${escapeHtml(g.firmness)}</span></td>
-                  <td class="p-3.5 font-bold text-slate-900">${escapeHtml(g.metric_category)}</td>
-                  <td class="p-3.5 mono text-indigo-700 font-bold bg-indigo-50/50">${escapeHtml(g.quantums.join(', '))}</td>
-                  <td class="p-3.5 mono font-semibold text-slate-600">${escapeHtml(g.timelines.join(', '))}</td>
-                  <td class="p-3.5 text-xs leading-relaxed text-slate-600">${escapeHtml(g.sentence)}</td>
+                  <td class="p-3.5 align-top"><span class="badge ${bCls}">${escapeHtml(g.firmness)}</span></td>
+                  <td class="p-3.5 align-top font-bold text-slate-800">${escapeHtml(g.metric_category)}</td>
+                  <td class="p-3.5 align-top">${quantumList}</td>
+                  <td class="p-3.5 align-top">${timelineList}</td>
+                  <td class="p-3.5 align-top text-xs leading-relaxed text-slate-600 font-medium">${escapeHtml(g.sentence)}</td>
                 </tr>
               `;
             }).join('')}
           </tbody>
         </table>
+      `;
+    }
+
+    // REQ 5: Refined professional grey badges for deflections
+    function renderDeflections() {
+      const current = analyzedCalls[activeCallIndex];
+      if (!current) return;
+      const defContainer = document.getElementById('deflectionsContainer');
+
+      if (current.qaAudit.deflectionEvents.length === 0) {
+        defContainer.innerHTML = `<p class="p-4 text-xs font-semibold text-emerald-600 bg-emerald-50 rounded-xl">✓ Zero explicit question deflections or quantitative non-answers identified in Q&A session.</p>`;
+        return;
+      }
+
+      defContainer.innerHTML = current.qaAudit.deflectionEvents.map((ev, idx) => `
+        <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3 transition hover:shadow-md">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+            <!-- Refined Neutral Grey Tag for Clean Institutional Look -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 mono">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+              <span>#${idx + 1} ${escapeHtml(ev.type)}</span>
+              <span class="text-slate-400 font-normal">• "${escapeHtml(ev.trigger_phrase)}"</span>
+            </div>
+            <span class="text-xs text-slate-500 font-medium">Management Speaker: <strong class="text-slate-800">${escapeHtml(ev.speaker)}</strong></span>
+          </div>
+
+          <div class="border-l-4 border-indigo-400 bg-indigo-50/40 rounded-r-lg p-3.5 text-xs text-slate-700 leading-relaxed">
+            <strong class="not-italic text-indigo-700 font-bold block mb-1">Analyst Question (${escapeHtml(ev.analyst)}):</strong>
+            <span class="italic">${escapeHtml(ev.preceding_question)}</span>
+          </div>
+
+          <div class="border-l-4 border-slate-400 bg-slate-50 rounded-r-lg p-3.5 text-xs text-slate-700 leading-relaxed">
+            <strong class="not-italic text-slate-800 font-bold block mb-1">Management Response:</strong>
+            <span class="italic">${escapeHtml(ev.deflected_statement)}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // REQ 6: Capex, Debt & Margins stacked one-by-one with rich disclosures
+    function renderDriversOneByOne() {
+      const current = analyzedCalls[activeCallIndex];
+      if (!current) return;
+      const drvContainer = document.getElementById('driversContainer');
+
+      // 1. Capex List
+      const capexItems = current.capexDebt.capex;
+      const capexHtml = capexItems.length > 0
+        ? capexItems.map((c, i) => `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:shadow-sm transition flex flex-col sm:flex-row sm:items-start gap-2.5">
+              <div class="sm:w-36 shrink-0">
+                ${c.figures.length > 0 ? c.figures.map(f => `<span class="badge badge-neutral mono font-bold text-xs">${escapeHtml(f)}</span>`).join(' ') : `<span class="badge bg-slate-200 text-slate-700 mono text-xs">Capex Disclosure</span>`}
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed flex-1">${escapeHtml(c.sentence)}</div>
+            </div>
+          `).join('')
+        : `<p class="p-4 text-xs text-slate-400 italic bg-slate-50 rounded-xl">No explicit capex figures or capital expenditure statements were flagged in this transcript.</p>`;
+
+      // 2. Debt List
+      const debtItems = current.capexDebt.debt;
+      const debtHtml = debtItems.length > 0
+        ? debtItems.map((d, i) => `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:shadow-sm transition flex flex-col sm:flex-row sm:items-start gap-2.5">
+              <div class="sm:w-36 shrink-0">
+                ${d.figures.length > 0 ? d.figures.map(f => `<span class="badge badge-mod mono font-bold text-xs">${escapeHtml(f)}</span>`).join(' ') : `<span class="badge bg-slate-200 text-slate-700 mono text-xs">Liquidity Metric</span>`}
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed flex-1">${escapeHtml(d.sentence)}</div>
+            </div>
+          `).join('')
+        : `<p class="p-4 text-xs text-slate-400 italic bg-slate-50 rounded-xl">No debt or leverage figures highlighted.</p>`;
+
+      // 3. Margins List
+      const marginItems = current.marginDrivers;
+      const marginHtml = marginItems.length > 0
+        ? marginItems.map((m, i) => `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:shadow-sm transition flex flex-col sm:flex-row sm:items-start gap-2.5">
+              <div class="sm:w-44 shrink-0 flex flex-wrap gap-1">
+                ${m.drivers.map(drv => `<span class="badge badge-firm text-[10px] font-bold">${escapeHtml(drv.toUpperCase())}</span>`).join(' ')}
+                ${m.quantums.length > 0 ? `<span class="badge badge-neutral mono text-[10px]">${escapeHtml(m.quantums.join(', '))}</span>` : ''}
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed flex-1">${escapeHtml(m.statement)}</div>
+            </div>
+          `).join('')
+        : `<p class="p-4 text-xs text-slate-400 italic bg-slate-50 rounded-xl">No specific margin driver explanations matched.</p>`;
+
+      drvContainer.innerHTML = `
+        <!-- Card 1: Capex Stacked -->
+        <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              <h3 class="text-sm font-bold text-slate-900">Capex & Capacity Expansion Commitments</h3>
+            </div>
+            <span class="badge badge-neutral font-bold">${capexItems.length} Disclosures</span>
+          </div>
+          <div class="space-y-2.5">${capexHtml}</div>
+        </div>
+
+        <!-- Card 2: Debt Stacked -->
+        <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              <h3 class="text-sm font-bold text-slate-900">Debt, Liquidity & Working Capital Profile</h3>
+            </div>
+            <span class="badge badge-mod font-bold">${debtItems.length} Disclosures</span>
+          </div>
+          <div class="space-y-2.5">${debtHtml}</div>
+        </div>
+
+        <!-- Card 3: Margins Stacked -->
+        <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <h3 class="text-sm font-bold text-slate-900">Operating Leverage & Margin Drivers</h3>
+            </div>
+            <span class="badge badge-firm font-bold">${marginItems.length} Disclosures</span>
+          </div>
+          <div class="space-y-2.5">${marginHtml}</div>
+        </div>
       `;
     }
 
@@ -1057,7 +1314,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Institutional Autopsy — ${escapeHtml(current.metadata.company)} (${escapeHtml(current.metadata.period)})</title>
+<title>Autopsy — ${escapeHtml(current.metadata.company)} (${escapeHtml(current.metadata.period)})</title>
 <style>
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #0f172a; padding: 30px; line-height: 1.5; }
   .container { max-width: 1150px; margin: 0 auto; }
@@ -1071,8 +1328,8 @@
 <body>
   <div class="container">
     <h1>CONCALL CONFESSIONS // ${escapeHtml(current.metadata.company)} (${escapeHtml(current.metadata.period)})</h1>
-    <p>Candor Score: <strong>${current.qaAudit.candorScore}/10</strong> | Credibility: <strong>${escapeHtml(current.credibilityRating)}</strong> | Deflection Rate: <strong>${current.qaAudit.deflectionRatePct}%</strong> | Hedge Density: <strong>${current.qaAudit.hedgeDensityPct}%</strong></p>
-    ${document.getElementById('multiCallSection').classList.contains('hidden') ? '' : `<div class="section"><h2>Multi-Concall Trajectory</h2>${document.getElementById('multiCallSection').innerHTML}</div>`}
+    <p>Candor Score: <strong>${current.qaAudit.candorScore}/10</strong> | Deflection Rate: <strong>${current.qaAudit.deflectionRatePct}%</strong> | Hedge Density: <strong>${current.qaAudit.hedgeDensityPct}%</strong></p>
+    <div class="section"><h2>Quarter Financial Disclosures</h2>${document.getElementById('financialItemsContainer').innerHTML}</div>
     <div class="section"><h2>Forensic Red Flags</h2>${document.getElementById('redFlagsContainer').innerHTML}</div>
     <div class="section"><h2>Forward Guidance (${current.guidanceRecords.length})</h2>${document.getElementById('guidanceContainer').innerHTML}</div>
     <div class="section"><h2>Audited Q&A Deflections</h2>${document.getElementById('deflectionsContainer').innerHTML}</div>
@@ -1099,6 +1356,11 @@
       fileInput.click();
     });
     dropZone.addEventListener('click', () => fileInput.click());
+
+    // REQ 1: "Analyse Another Concall" top button triggers file chooser
+    document.getElementById('btnAnalyseAnother').addEventListener('click', () => {
+      fileInput.click();
+    });
 
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -1127,7 +1389,7 @@
       document.getElementById('pastePanel').classList.add('hidden');
     });
     document.getElementById('btnRunPasted').addEventListener('click', () => {
-      const title = document.getElementById('pasteTitleInput').value.trim() || `Pasted_Concall_${analyzedCalls.length + 1}`;
+      const title = document.getElementById('pasteTitleInput').value.trim() || `Concall_${analyzedCalls.length + 1}`;
       const raw = document.getElementById('pasteTextArea').value;
       if (raw && raw.trim().length > 50) {
         const res = analyzeTranscript(raw, `${title}.txt`, title);
@@ -1138,6 +1400,20 @@
         document.getElementById('pastePanel').classList.add('hidden');
         renderAll();
       }
+    });
+
+    // Sub-tab listeners for Financials (P&L, Balance Sheet, Cash Flow)
+    document.getElementById('btnTabPL').addEventListener('click', () => {
+      activeFinancialTab = 'pl';
+      renderFinancialDisclosures();
+    });
+    document.getElementById('btnTabBS').addEventListener('click', () => {
+      activeFinancialTab = 'bs';
+      renderFinancialDisclosures();
+    });
+    document.getElementById('btnTabCF').addEventListener('click', () => {
+      activeFinancialTab = 'cf';
+      renderFinancialDisclosures();
     });
 
     document.getElementById('guidanceFilter').addEventListener('change', renderGuidanceTable);
